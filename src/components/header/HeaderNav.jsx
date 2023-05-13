@@ -6,19 +6,19 @@ const HeaderNav = () => {
       <UlStyle>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" defaultChecked />
+            <ItemLine type="radio" name="nav" value="stay" defaultChecked={false} />
             <SpanText>숙소</SpanText>
           </LabelStyle>
         </li>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" />
+            <ItemLine type="radio" name="nav" value="experience" />
             <SpanText>체험</SpanText>
           </LabelStyle>
         </li>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" />
+            <ItemLine type="radio" name="nav" value="online-experience" />
             <SpanText>온라인 체험</SpanText>
           </LabelStyle>
         </li>
