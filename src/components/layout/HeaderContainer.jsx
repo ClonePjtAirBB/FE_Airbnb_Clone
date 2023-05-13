@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Header from '../header/Header';
+import Header from './Header';
 import { throttle } from 'lodash';
 import React from 'react';
 

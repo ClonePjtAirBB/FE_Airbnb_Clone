@@ -2,7 +2,8 @@ import { styled, keyframes } from 'styled-components';
 import { ReactComponent as HeaderLogo } from '../assets/header-logo.svg';
 import { Link } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
-import HeaderNav from './HeaderNav';
+import HeaderNav from '../header/HeaderNav';
+import HeaderFormContainer from '../header/HeaderFormContainer';
 
 const Header = ({
   isscrolltop,
@@ -18,6 +19,10 @@ const Header = ({
       </Link>
       <NavFormContainer>
         <HeaderNav
+          isscrolltop={isscrolltop.toString()}
+          isbuttonnclicked={isbuttonnclicked.toString()}
+        />
+        <HeaderFormContainer
           isscrolltop={isscrolltop.toString()}
           isbuttonnclicked={isbuttonnclicked.toString()}
         />
