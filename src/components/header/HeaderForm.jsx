@@ -27,6 +27,11 @@ const HeaderForm = ({
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  box-sizing: border-box;
+  z-index: 100;
+
+  height: ${({ isButtonClicked }) => (isButtonClicked ? '180px' : '80px')};
+  border: 1px solid #ebebeb;
 `;
 
 const NavFormContainer = styled.div``;
