@@ -1,10 +1,10 @@
-import { styled } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 import { ReactComponent as HeaderLogo } from '../assets/header-logo.svg';
 import { Link } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
 import HeaderNav from './HeaderNav';
 
-const HeaderForm = ({
+const HeaderContainer = ({
   isscrolltop,
   isbuttonnclicked,
   isAnimation,
@@ -43,11 +43,10 @@ const Container = styled.div`
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
   background-color: ${({ isscrolltop }) => (isscrolltop === 'true' ? 'transparent' : 'white')};
   border-bottom: ${({ isscrolltop }) => isscrolltop === 'false' && '1px solid #DDDDDD'};
-  // 1px solid #ebebeb;
 `;
 
 const NavFormContainer = styled.div``;
 
 const ScrollFormButton = styled.div``;
 
-export default HeaderForm;
+export default HeaderContainer;

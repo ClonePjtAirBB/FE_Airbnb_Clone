@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import HeaderForm from '../header/HeaderForm';
+import HeaderContainer from '../header/HeaderContainer';
 import { throttle } from 'lodash';
 import React from 'react';
 
@@ -33,7 +33,7 @@ const Header = () => {
   }, [onScrollHandler, isAnimation]);
 
   return (
-    <HeaderForm
+    <HeaderContainer
       isscrolltop={isscrolltop}
       isbuttonnclicked={isbuttonnclicked}
       isAnimation={isAnimation}
