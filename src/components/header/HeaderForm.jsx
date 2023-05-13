@@ -32,9 +32,13 @@ const Container = styled.div`
   justify-content: space-between;
   box-sizing: border-box;
   z-index: 100;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  top: 0;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
-  border: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
 `;
 
 const NavFormContainer = styled.div``;
