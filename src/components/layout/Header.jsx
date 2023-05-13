@@ -1,5 +1,7 @@
+import HeaderForm from '../header/HeaderForm';
+
 const Header = () => {
-  return <>header</>;
+  return <HeaderForm />;
 };
 
 export default Header;
