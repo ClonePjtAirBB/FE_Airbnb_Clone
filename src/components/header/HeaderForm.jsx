@@ -30,15 +30,20 @@ const HeaderForm = ({
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
   box-sizing: border-box;
   z-index: 100;
   position: fixed;
   background-color: white;
   width: 100%;
   top: 0;
+  padding: 20px 80px 15px 80px;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
-  border-bottom: 1px solid #ebebeb;
+  background-color: ${({ isscrolltop }) => (isscrolltop === 'true' ? 'transparent' : 'white')};
+  border-bottom: ${({ isscrolltop }) => isscrolltop === 'false' && '1px solid #DDDDDD'};
+  // 1px solid #ebebeb;
 `;
 
 const NavFormContainer = styled.div``;
