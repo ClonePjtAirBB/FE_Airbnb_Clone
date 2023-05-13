@@ -1,12 +1,12 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-const HeaderNav = () => {
+const HeaderNav = ({ isScrollTop }) => {
   return (
     <NavStyle>
       <UlStyle>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" value="stay" defaultChecked={false} />
+            <ItemLine type="radio" name="nav" value="stay" defaultChecked />
             <SpanText>숙소</SpanText>
           </LabelStyle>
         </li>
@@ -32,6 +32,21 @@ const NavStyle = styled.nav`
   justify-content: center;
   width: 100%;
   padding: 20px;
+
+  ${({ isScrollTop }) =>
+    isScrollTop
+      ? css`
+          color: white;
+          & ${SpanText}::before {
+            background-color: white;
+          }
+        `
+      : css`
+          color: black;
+          & ${SpanText}::before {
+            background-color: black;
+          }
+        `}
 `;
 
 const UlStyle = styled.ul`
