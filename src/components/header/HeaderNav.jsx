@@ -1,8 +1,8 @@
 import { css, styled } from 'styled-components';
 
-const HeaderNav = ({ isScrollTop }) => {
+const HeaderNav = ({ isscrolltop }) => {
   return (
-    <NavStyle>
+    <NavStyle isscrolltop={isscrolltop.toString()}>
       <UlStyle>
         <li>
           <LabelStyle>
@@ -33,8 +33,8 @@ const NavStyle = styled.nav`
   width: 100%;
   padding: 20px;
 
-  ${({ isScrollTop }) =>
-    isScrollTop
+  ${({ isscrolltop }) =>
+    isscrolltop === 'true'
       ? css`
           color: white;
           & ${SpanText}::before {

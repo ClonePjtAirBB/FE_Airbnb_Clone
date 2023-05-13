@@ -4,8 +4,8 @@ import { throttle } from 'lodash';
 import React from 'react';
 
 const Header = () => {
-  const [isScrollTop, setIsScrollTop] = useState(window.scrollY < 40);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [isscrolltop, setIsScrollTop] = useState(window.scrollY < 40);
+  const [isbuttonnclicked, setIsButtonClicked] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
 
   const onScrollHandler = e => {
@@ -34,8 +34,8 @@ const Header = () => {
 
   return (
     <HeaderForm
-      isScrollTop={isScrollTop}
-      isButtonClicked={isButtonClicked}
+      isscrolltop={isscrolltop}
+      isbuttonnclicked={isbuttonnclicked}
       isAnimation={isAnimation}
       onClickLogoHandler={onClickLogoHandler}
       onClickButtonHandler={onClickButtonHandler}

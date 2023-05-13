@@ -5,19 +5,19 @@ import { PATH_URL } from '../../constants';
 import HeaderNav from './HeaderNav';
 
 const HeaderForm = ({
-  isScrollTop,
-  isButtonClicked,
+  isscrolltop,
+  isbuttonnclicked,
   isAnimation,
   onClickLogoHandler,
   onClickButtonHandler,
 }) => {
   return (
-    <Container isScrollTop={isScrollTop} isButtonClicked={isButtonClicked}>
+    <Container isscrolltop={isscrolltop.toString()} isbuttonnclicked={isbuttonnclicked.toString()}>
       <Link to={PATH_URL.MAIN}>
         <HeaderLogo />
       </Link>
       <NavFormContainer>
-        <HeaderNav isScrollTop={isScrollTop} />
+        <HeaderNav isscrolltop={isscrolltop} />
       </NavFormContainer>
       <ScrollFormButton></ScrollFormButton>
     </Container>
@@ -30,7 +30,7 @@ const Container = styled.div`
   box-sizing: border-box;
   z-index: 100;
 
-  height: ${({ isButtonClicked }) => (isButtonClicked ? '180px' : '80px')};
+  height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
   border: 1px solid #ebebeb;
 `;
 
