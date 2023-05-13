@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import HeaderContainer from '../components/layout/HeaderContainer';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <Content>{children}</Content>
       <Footer />
     </>

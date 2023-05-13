@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
 import HeaderNav from './HeaderNav';
 
-const HeaderContainer = ({
+const Header = ({
   isscrolltop,
   isbuttonnclicked,
   isAnimation,
@@ -49,4 +49,4 @@ const NavFormContainer = styled.div``;
 
 const ScrollFormButton = styled.div``;
 
-export default HeaderContainer;
+export default Header;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import HeaderContainer from '../header/HeaderContainer';
+import Header from '../header/Header';
 import { throttle } from 'lodash';
 import React from 'react';
 
-const Header = () => {
+const HeaderContainer = () => {
   const [isscrolltop, setIsScrollTop] = useState(window.scrollY < 40);
   const [isbuttonnclicked, setIsButtonClicked] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
@@ -33,7 +33,7 @@ const Header = () => {
   }, [onScrollHandler, isAnimation]);
 
   return (
-    <HeaderContainer
+    <Header
       isscrolltop={isscrolltop}
       isbuttonnclicked={isbuttonnclicked}
       isAnimation={isAnimation}
@@ -43,4 +43,4 @@ const Header = () => {
   );
 };
 
-export default React.memo(Header);
+export default React.memo(HeaderContainer);
