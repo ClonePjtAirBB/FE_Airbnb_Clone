@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { ReactComponent as HeaderLogo } from '../assets/header-logo.svg';
 import { Link } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
+import HeaderNav from './HeaderNav';
 
 const HeaderForm = () => {
   return (
@@ -9,7 +10,9 @@ const HeaderForm = () => {
       <Link to={PATH_URL.MAIN}>
         <HeaderLogo />
       </Link>
-      <Style.NavFormContainer></Style.NavFormContainer>
+      <Style.NavFormContainer>
+        <HeaderNav />
+      </Style.NavFormContainer>
       <Style.ScrollFormButton></Style.ScrollFormButton>
     </Style.Container>
   );
