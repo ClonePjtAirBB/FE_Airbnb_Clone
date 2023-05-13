@@ -17,7 +17,10 @@ const HeaderForm = ({
         <HeaderLogo />
       </Link>
       <NavFormContainer>
-        <HeaderNav isscrolltop={isscrolltop} />
+        <HeaderNav
+          isscrolltop={isscrolltop.toString()}
+          isbuttonnclicked={isbuttonnclicked.toString()}
+        />
       </NavFormContainer>
       <ScrollFormButton></ScrollFormButton>
     </Container>

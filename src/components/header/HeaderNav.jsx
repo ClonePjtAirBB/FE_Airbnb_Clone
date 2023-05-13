@@ -1,8 +1,8 @@
 import { css, styled } from 'styled-components';
 
-const HeaderNav = ({ isscrolltop }) => {
+const HeaderNav = ({ isscrolltop, isbuttonnclicked }) => {
   return (
-    <NavStyle isscrolltop={isscrolltop.toString()}>
+    <NavStyle isscrolltop={isscrolltop} isbuttonnclicked={isbuttonnclicked}>
       <UlStyle>
         <li>
           <LabelStyle>
@@ -33,8 +33,8 @@ const NavStyle = styled.nav`
   width: 100%;
   padding: 20px;
 
-  ${({ isscrolltop }) =>
-    isscrolltop === 'true'
+  ${({ isscrolltop, isbuttonnclicked }) =>
+    isscrolltop === 'false' || isbuttonnclicked === 'true'
       ? css`
           color: white;
           & ${SpanText}::before {
