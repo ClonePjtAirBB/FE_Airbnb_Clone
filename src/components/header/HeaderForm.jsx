@@ -12,24 +12,25 @@ const HeaderForm = ({
   onClickButtonHandler,
 }) => {
   return (
-    <Style.Container>
+    <Container isScrollTop={isScrollTop} isButtonClicked={isButtonClicked}>
       <Link to={PATH_URL.MAIN}>
         <HeaderLogo />
       </Link>
-      <Style.NavFormContainer>
+      <NavFormContainer>
         <HeaderNav isScrollTop={isScrollTop} />
-      </Style.NavFormContainer>
-      <Style.ScrollFormButton></Style.ScrollFormButton>
-    </Style.Container>
+      </NavFormContainer>
+      <ScrollFormButton></ScrollFormButton>
+    </Container>
   );
 };
 
-const Style = {
-  Container: styled.div`
-    display: flex;
-    justify-content: space-between;
-  `,
-  NavFormContainer: styled.div``,
-  ScrollFormButton: styled.div``,
-};
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NavFormContainer = styled.div``;
+
+const ScrollFormButton = styled.div``;
+
 export default HeaderForm;
