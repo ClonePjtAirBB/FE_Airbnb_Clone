@@ -6,19 +6,19 @@ const HeaderNav = ({ isscrolltop }) => {
       <UlStyle>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" value="stay" defaultChecked />
+            <CheckItem type="radio" name="nav" value="stay" defaultChecked />
             <SpanText>숙소</SpanText>
           </LabelStyle>
         </li>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" value="experience" />
+            <CheckItem type="radio" name="nav" value="experience" />
             <SpanText>체험</SpanText>
           </LabelStyle>
         </li>
         <li>
           <LabelStyle>
-            <ItemLine type="radio" name="nav" value="online-experience" />
+            <CheckItem type="radio" name="nav" value="online-experience" />
             <SpanText>온라인 체험</SpanText>
           </LabelStyle>
         </li>
@@ -76,7 +76,7 @@ const SpanText = styled.span`
     transition: 0.25s transform cubic-bezier(0, 0, 0.1, 1);
   }
 `;
-const ItemLine = styled.input`
+const CheckItem = styled.input`
   display: none;
   &:hover + ${SpanText}::before {
     transform: scaleX(0.5);
