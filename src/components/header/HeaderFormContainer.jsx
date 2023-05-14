@@ -5,14 +5,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
-  const [formSelect, setFormSelect] = useState(null);
+  const [formselect, setFormSelect] = useState(null);
   const headerRefs = useHeaderRef();
-  const latestSelect = useRef(formSelect);
+  const latestSelect = useRef(formselect);
   const formData = useSelector(state => state.filterForm);
 
   const { place, checkIn, checkOut, guests } = formData;
 
-  latestSelect.current = formSelect;
+  latestSelect.current = formselect;
 
   const selectHandler = select => {
     setFormSelect(select);
@@ -56,14 +56,14 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   }, [dropdownHanlder]);
 
   useEffect(() => {
-    if (formSelect) changeFocus();
+    if (formselect) changeFocus();
   });
 
   return (
     <HeaderForm
       isscrolltop={isscrolltop}
       isbuttonnclicked={isbuttonnclicked}
-      formSelect={formSelect}
+      formselect={formselect}
       headerRefs={headerRefs}
       selectHandler={selectHandler}
       formData={formData}

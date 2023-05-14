@@ -4,7 +4,7 @@ import SearchIcon from './SearchIcon';
 const HeaderForm = ({
   isscrolltop,
   isbuttonnclicked,
-  formSelect,
+  formselect,
   headerRefs,
   selectHandler,
   formData,
@@ -32,7 +32,7 @@ const HeaderForm = ({
       <Wrapper
         ref={placeWrapperRef}
         name="place"
-        formSelect={formSelect}
+        formselect={formselect}
         width="30%"
         onClick={() => selectHandler('place')}
       >
@@ -44,21 +44,21 @@ const HeaderForm = ({
         </PlaceContainer>
       </Wrapper>
 
-      <Wrapper ref={checkInWrapperRef} name="checkIn" formSelect={formSelect} width="20%">
+      <Wrapper ref={checkInWrapperRef} name="checkIn" formselect={formselect} width="20%">
         <TextWrapper>
           <TextLabel>체크인</TextLabel>
           <TextDesc value={checkIn}>{checkIn || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 
-      <Wrapper ref={checkOutWrapperRef} name="checkOut" formSelect={formSelect} width="20%">
+      <Wrapper ref={checkOutWrapperRef} name="checkOut" formselect={formselect} width="20%">
         <TextWrapper>
           <TextLabel>체크아웃</TextLabel>
           <TextDesc value={checkOut}>{checkOut || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 
-      <Wrapper ref={guestWrapperRef} name="guests" formSelect={formSelect} width="30%">
+      <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%">
         <TextWrapper>
           <TextLabel>여행자</TextLabel>
           <TextDesc>게스트 추가</TextDesc>
@@ -111,8 +111,8 @@ const Wrapper = styled.div`
     background-color: #dddddd;
   }
 
-  ${({ formSelect, name }) =>
-    !(formSelect === 'checkIn' && name === 'checkOut') &&
+  ${({ formselect, name }) =>
+    !(formselect === 'checkIn' && name === 'checkOut') &&
     css`
       &:hover {
         background: rgba(0, 0, 0, 0.07);
