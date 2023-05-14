@@ -1,6 +1,7 @@
 import HeaderForm from './HeaderForm';
 import useHeaderRef from '../../hooks/useHeaderRef';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import React from 'react';
 
 const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   const [formSelect, setFormSelect] = useState(null);
@@ -11,6 +12,12 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
 
   const selectHandler = select => {
     setFormSelect(select);
+  };
+
+  const changeFocus = () => {
+    if (latestSelect.current === 'checkIn') headerRefs.checkInWrapperRef.current.focus();
+    else if (latestSelect.current === 'checkOut') headerRefs.checkInWrapperRef.current.focus();
+    else if (latestSelect.current === 'guests') headerRefs.guestWrapperRef.current.focus();
   };
 
   const dropdownHanlder = useCallback(
@@ -44,6 +51,10 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
     };
   }, [dropdownHanlder]);
 
+  useEffect(() => {
+    if (formSelect) changeFocus();
+  });
+
   return (
     <HeaderForm
       isscrolltop={isscrolltop}
@@ -55,4 +66,4 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   );
 };
 
-export default HeaderFormContainer;
+export default React.memo(HeaderFormContainer);
