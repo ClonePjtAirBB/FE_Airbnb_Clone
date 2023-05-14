@@ -5,6 +5,7 @@ import { PATH_URL } from '../../constants';
 import HeaderNav from '../header/HeaderNav';
 import HeaderFormContainer from '../header/HeaderFormContainer';
 import ScrollFormButton from '../header/ScrollFormButton';
+import HeaderUserNav from '../header/HeaderUserNav';
 
 const Header = ({
   isscrolltop,
@@ -28,6 +29,7 @@ const Header = ({
           isbuttonnclicked={isbuttonnclicked.toString()}
         />
       </NavFormContainer>
+
       <ScrollFormButtonContainer
         onClick={onClickButtonHandler}
         isscrolltop={isscrolltop.toString()}
@@ -35,6 +37,8 @@ const Header = ({
       >
         <ScrollFormButton />
       </ScrollFormButtonContainer>
+
+      <HeaderUserNav />
     </Container>
   );
 };
