@@ -65,7 +65,7 @@ const FormStyle = styled.form`
   background-color: white;
   width: 100%;
   height: 66px;
-  border-radius: 10rem;
+  border-radius: 34px;
 
   border: 1px solid #dddddd;
 
@@ -84,6 +84,7 @@ const Wrapper = styled.div`
   height: 68px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   margin-top: -2px;
   outline: none;
@@ -121,7 +122,7 @@ const Wrapper = styled.div`
 
   &:focus-within {
     background-color: white;
-    border-radius: 10rem;
+    border-radius: 34px;
     height: 66px;
     margin-top: -1px;
     box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);
@@ -164,6 +165,14 @@ const PlaceContainer = styled.div`
   display: flex;
   align-items: center;
   padding-left: 28px;
+
+  &:focus-within {
+    background: white;
+    border-radius: 34px;
+    & ${TextWrapper}::before {
+      display: none;
+    }
+  }
 `;
 
 export default HeaderForm;
