@@ -1,5 +1,6 @@
 import { css, styled } from 'styled-components';
 import SearchIcon from './SearchIcon';
+import GuestsDropdown from './dropdown/GuestsDropdown';
 
 const HeaderForm = ({
   isscrolltop,
@@ -80,6 +81,7 @@ const HeaderForm = ({
           <SearchIcon size="48px" iconSize="16px" />
         </IconContainer>
       </Wrapper>
+      <GuestsDropdown ref={guestDropdownRef} formselect={formselect} formData={formData} />
     </FormStyle>
   );
 };
