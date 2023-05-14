@@ -1,7 +1,14 @@
 import { css, styled } from 'styled-components';
 import SearchIcon from './SearchIcon';
 
-const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, selectHandler }) => {
+const HeaderForm = ({
+  isscrolltop,
+  isbuttonnclicked,
+  formSelect,
+  headerRefs,
+  selectHandler,
+  formData,
+}) => {
   const {
     formRef,
     placeWrapperRef,
@@ -14,6 +21,8 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
     guestWrapperRef,
     guestDropdownRef,
   } = headerRefs;
+
+  const { place, checkIn, checkOut, guests } = formData;
 
   // TEST CODE
   console.log('HeaderForm rendering');
@@ -30,7 +39,7 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
         <PlaceContainer>
           <TextWrapper>
             <TextLabel>여행지</TextLabel>
-            <TextDesc>여행지 검색</TextDesc>
+            <TextDesc value={place}>여행지 검색</TextDesc>
           </TextWrapper>
         </PlaceContainer>
       </Wrapper>
@@ -38,14 +47,14 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
       <Wrapper ref={checkInWrapperRef} name="checkIn" formSelect={formSelect} width="20%">
         <TextWrapper>
           <TextLabel>체크인</TextLabel>
-          <TextDesc>날짜 추가</TextDesc>
+          <TextDesc value={checkIn}>{checkIn || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 
       <Wrapper ref={checkOutWrapperRef} name="checkOut" formSelect={formSelect} width="20%">
         <TextWrapper>
           <TextLabel>체크아웃</TextLabel>
-          <TextDesc>날짜 추가</TextDesc>
+          <TextDesc value={checkOut}>{checkOut || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 

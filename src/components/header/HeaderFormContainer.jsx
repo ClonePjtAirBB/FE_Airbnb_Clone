@@ -2,11 +2,15 @@ import HeaderForm from './HeaderForm';
 import useHeaderRef from '../../hooks/useHeaderRef';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   const [formSelect, setFormSelect] = useState(null);
   const headerRefs = useHeaderRef();
   const latestSelect = useRef(formSelect);
+  const formData = useSelector(state => state.filterForm);
+
+  const { place, checkIn, checkOut, guests } = formData;
 
   latestSelect.current = formSelect;
 
@@ -62,6 +66,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
       formSelect={formSelect}
       headerRefs={headerRefs}
       selectHandler={selectHandler}
+      formData={formData}
     />
   );
 };
