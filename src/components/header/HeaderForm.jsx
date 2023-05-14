@@ -76,8 +76,10 @@ const HeaderForm = ({
           <TextLabel>여행자</TextLabel>
           <TextDesc>게스트 추가</TextDesc>
         </TextWrapper>
+        <IconContainer>
+          <SearchIcon size="48px" iconSize="16px" />
+        </IconContainer>
       </Wrapper>
-      <SearchIcon size="48px" iconSize="16px" />
     </FormStyle>
   );
 };
@@ -89,7 +91,6 @@ const FormStyle = styled.form`
   height: 66px;
   border-radius: 34px;
   align-items: center;
-  padding-right: 5px;
 
   border: 1px solid #dddddd;
 
@@ -149,7 +150,7 @@ const Wrapper = styled.div`
     border-radius: 34px;
     height: 66px;
     margin-top: -1px;
-    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     ${TextWrapper}::before {
       display: none;
     }
@@ -197,6 +198,10 @@ const PlaceContainer = styled.div`
       display: none;
     }
   }
+`;
+
+const IconContainer = styled.div`
+  padding-right: 5px;
 `;
 
 export default HeaderForm;
