@@ -35,6 +35,7 @@ const HeaderForm = ({
         formselect={formselect}
         width="30%"
         onClick={() => selectHandler('place')}
+        tabIndex="1"
       >
         <PlaceContainer>
           <TextWrapper>
@@ -44,21 +45,33 @@ const HeaderForm = ({
         </PlaceContainer>
       </Wrapper>
 
-      <Wrapper ref={checkInWrapperRef} name="checkIn" formselect={formselect} width="20%">
+      <Wrapper
+        ref={checkInWrapperRef}
+        name="checkIn"
+        formselect={formselect}
+        width="20%"
+        tabIndex="2"
+      >
         <TextWrapper>
           <TextLabel>체크인</TextLabel>
           <TextDesc value={checkIn}>{checkIn || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 
-      <Wrapper ref={checkOutWrapperRef} name="checkOut" formselect={formselect} width="20%">
+      <Wrapper
+        ref={checkOutWrapperRef}
+        name="checkOut"
+        formselect={formselect}
+        width="20%"
+        tabIndex="3"
+      >
         <TextWrapper>
           <TextLabel>체크아웃</TextLabel>
           <TextDesc value={checkOut}>{checkOut || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
 
-      <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%">
+      <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%" tabIndex="4">
         <TextWrapper>
           <TextLabel>여행자</TextLabel>
           <TextDesc>게스트 추가</TextDesc>
