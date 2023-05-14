@@ -1,6 +1,7 @@
 import { css, styled } from 'styled-components';
 import SearchIcon from './SearchIcon';
 import GuestsDropdown from './dropdown/GuestsDropdown';
+import PlaceDropDown from './dropdown/PlaceDropdown';
 
 const HeaderForm = ({
   isscrolltop,
@@ -45,6 +46,7 @@ const HeaderForm = ({
           </TextWrapper>
         </PlaceContainer>
       </Wrapper>
+      <PlaceDropDown ref={placeDropdownRef} formselect={formselect} formData={formData} />
 
       <Wrapper
         ref={checkInWrapperRef}
