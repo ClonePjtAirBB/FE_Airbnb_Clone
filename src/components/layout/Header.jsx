@@ -10,16 +10,24 @@ import HeaderUserNav from '../header/HeaderUserNav';
 const Header = ({
   isscrolltop,
   isbuttonnclicked,
-  isAnimation,
+  initanimation,
   onClickLogoHandler,
   onClickButtonHandler,
 }) => {
   return (
-    <Container isscrolltop={isscrolltop.toString()} isbuttonnclicked={isbuttonnclicked.toString()}>
+    <Container
+      isscrolltop={isscrolltop.toString()}
+      isbuttonnclicked={isbuttonnclicked.toString()}
+      initanimation={initanimation.toString()}
+    >
       <Link to={PATH_URL.MAIN}>
         <HeaderLogo />
       </Link>
-      <NavFormContainer>
+      <NavFormContainer
+        isscrolltop={isscrolltop.toString()}
+        isbuttonnclicked={isbuttonnclicked.toString()}
+        initanimation={initanimation.toString()}
+      >
         <HeaderNav
           isscrolltop={isscrolltop.toString()}
           isbuttonnclicked={isbuttonnclicked.toString()}
@@ -54,9 +62,30 @@ const Container = styled.div`
   width: 100%;
   top: 0;
   padding: 20px 80px 15px 80px;
+  border-bottom: 1px solid #ebebeb;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
-  border-bottom: ${({ isscrolltop }) => isscrolltop === 'false' && '1px solid #DDDDDD'};
+`;
+
+const slideDown = keyframes`
+from {
+  transform: scale(0.3, 0.75) translateY(-80px);
+}
+to {
+  transform: scale(1, 1) translateY(0px);
+}
+`;
+
+const slideUp = keyframes`
+from {
+  transform: scale(1, 1) translateY(0px);
+  opacity: 0.5;
+}
+to {
+  transform: scale(0.3, 0.75) translateY(-80px);
+  opacity: 0;
+  visibility: hidden;
+}
 `;
 
 const NavFormContainer = styled.div`
@@ -66,8 +95,13 @@ const NavFormContainer = styled.div`
   left: calc(50vw - 425px);
   width: 850px;
   flex-direction: column;
-  /* display: ${({ isscrolltop, isbuttonnclicked }) =>
-    isscrolltop === 'true' || isbuttonnclicked === 'true' ? 'flex' : 'none'}; */
+
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-name: ${({ isscrolltop, isbuttonnclicked }) =>
+    isscrolltop === 'false' || isbuttonnclicked === 'true' ? slideDown : slideUp};
+  animation: ${({ initanimation }) => !initanimation && 'none'};
 `;
 
 const ScrollFormButtonContainer = styled.div`

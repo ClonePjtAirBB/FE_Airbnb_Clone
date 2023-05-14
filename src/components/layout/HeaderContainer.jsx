@@ -6,7 +6,7 @@ import React from 'react';
 const HeaderContainer = () => {
   const [isscrolltop, setIsScrollTop] = useState(window.scrollY < 40);
   const [isbuttonnclicked, setIsButtonClicked] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
+  const [initanimation, setInitAnimation] = useState(false);
 
   const onScrollHandler = e => {
     setIsScrollTop(e && window.scrollY < 40);
@@ -23,20 +23,20 @@ const HeaderContainer = () => {
   };
 
   useEffect(() => {
-    if (!isAnimation && window.scrollY > 40) {
-      setIsAnimation(true);
+    if (!initanimation && window.scrollY > 40) {
+      setInitAnimation(true);
     }
     window.addEventListener('scroll', throttle(onScrollHandler, 150));
     return () => {
       window.removeEventListener('scroll', onScrollHandler);
     };
-  }, [onScrollHandler, isAnimation]);
+  }, [onScrollHandler, initanimation]);
 
   return (
     <Header
       isscrolltop={isscrolltop}
       isbuttonnclicked={isbuttonnclicked}
-      isAnimation={isAnimation}
+      initanimation={initanimation}
       onClickLogoHandler={onClickLogoHandler}
       onClickButtonHandler={onClickButtonHandler}
     />
