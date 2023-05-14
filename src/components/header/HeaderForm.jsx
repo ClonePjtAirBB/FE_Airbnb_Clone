@@ -14,6 +14,9 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
     guestDropdownRef,
   } = headerRefs;
 
+  // TEST CODE
+  console.log('HeaderForm rendering');
+
   return (
     <FormStyle ref={formRef} isbuttonnclicked={isbuttonnclicked}>
       <Wrapper
@@ -23,10 +26,12 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
         width="30%"
         onClick={() => selectHandler('place')}
       >
-        <TextWrapper>
-          <TextLabel>여행지</TextLabel>
-          <TextDesc>여행지 검색</TextDesc>
-        </TextWrapper>
+        <PlaceContainer>
+          <TextWrapper>
+            <TextLabel>여행지</TextLabel>
+            <TextDesc>여행지 검색</TextDesc>
+          </TextWrapper>
+        </PlaceContainer>
       </Wrapper>
 
       <Wrapper ref={checkInWrapperRef} name="checkIn" formSelect={formSelect} width="20%">
@@ -77,27 +82,49 @@ const Wrapper = styled.div`
   position: relative;
   width: ${({ width }) => width};
   height: 68px;
+  display: flex;
+  align-items: center;
 
   margin-top: -2px;
   outline: none;
 
-  // &:not(:first-child) ${TextWrapper}::before {
-  ${TextWrapper}::before {
+  &:not(:first-child) ${TextWrapper}::before {
+    content: '';
     position: absolute;
     top: 0;
     left: -20px;
     display: block;
     height: 100%;
     width: 1px;
-    /* TODO: 회색 수정 */
-    background-color: gray;
+    background-color: #dddddd;
   }
+
+  ${({ formSelect, name }) =>
+    !(formSelect === 'checkIn' && name === 'checkOut') &&
+    css`
+      &:hover {
+        background: rgba(0, 0, 0, 0.07);
+        border-radius: 34px;
+        margin-top: -1px;
+        height: 66px;
+        ${TextWrapper}::before {
+          display: none;
+        }
+      }
+
+      &:hover + & {
+        ${TextWrapper}::before {
+          display: none;
+        }
+      }
+    `}
 
   &:focus-within {
     background-color: white;
     border-radius: 10rem;
     height: 66px;
     margin-top: -1px;
+    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);
     ${TextWrapper}::before {
       display: none;
     }
@@ -115,16 +142,21 @@ const Wrapper = styled.div`
   ${({ name }) =>
     name === 'place' ||
     css`
-      display: flex;
-      align-items: center;
       padding-left: 20px;
-      cursor: pointer;
     `}
 `;
 
-const TextLabel = styled.div``;
+const TextLabel = styled.div`
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: bold;
+`;
 
-const TextDesc = styled.div``;
+const TextDesc = styled.div`
+  font-size: 14px;
+  line-height: 18px;
+  color: #717171;
+`;
 
 const PlaceContainer = styled.div`
   width: 100%;
