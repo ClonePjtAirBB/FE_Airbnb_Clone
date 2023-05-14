@@ -17,7 +17,6 @@ const ScrollFormButton = () => {
 };
 
 const Container = styled.div`
-  padding-left: 150px;
   cursor: pointer;
 `;
 
