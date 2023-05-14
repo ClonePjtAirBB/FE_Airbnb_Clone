@@ -1,4 +1,5 @@
 import { css, styled } from 'styled-components';
+import SearchIcon from './SearchIcon';
 
 const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, selectHandler }) => {
   const {
@@ -54,8 +55,7 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
           <TextDesc>게스트 추가</TextDesc>
         </TextWrapper>
       </Wrapper>
-
-      {/* TODO: 검색 아이콘 */}
+      <SearchIcon size="48px" iconSize="16px" />
     </FormStyle>
   );
 };
@@ -66,6 +66,8 @@ const FormStyle = styled.form`
   width: 100%;
   height: 66px;
   border-radius: 34px;
+  align-items: center;
+  padding-right: 5px;
 
   border: 1px solid #dddddd;
 
@@ -86,7 +88,7 @@ const Wrapper = styled.div`
   align-items: center;
   cursor: pointer;
 
-  margin-top: -2px;
+  margin-top: -1px;
   outline: none;
 
   &:not(:first-child) ${TextWrapper}::before {

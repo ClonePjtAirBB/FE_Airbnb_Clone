@@ -3,15 +3,15 @@ import { ReactComponent as Icon } from '../assets/search-icon.svg';
 
 const SearchIcon = ({ size, iconSize }) => {
   return (
-    <SearchContainer width={size} heigth={size}>
+    <SearchContainer size={size}>
       <Icon width={iconSize} height={iconSize} />
     </SearchContainer>
   );
 };
 
 const SearchContainer = styled.div`
-  width: ${({ width }) => width};
-  height: ${({ heigth }) => heigth};
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
   border-radius: 50%;
   background-color: #ff385c;
 
