@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
 import HeaderNav from '../header/HeaderNav';
 import HeaderFormContainer from '../header/HeaderFormContainer';
+import ScrollFormButton from '../header/ScrollFormButton';
 
 const Header = ({
   isscrolltop,
@@ -27,7 +28,13 @@ const Header = ({
           isbuttonnclicked={isbuttonnclicked.toString()}
         />
       </NavFormContainer>
-      <ScrollFormButton></ScrollFormButton>
+      <ScrollFormButtonContainer
+        onClick={onClickButtonHandler}
+        isscrolltop={isscrolltop.toString()}
+        isbuttonnclicked={isbuttonnclicked.toString()}
+      >
+        <ScrollFormButton />
+      </ScrollFormButtonContainer>
     </Container>
   );
 };
@@ -35,7 +42,6 @@ const Header = ({
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
   box-sizing: border-box;
   z-index: 100;
@@ -46,12 +52,26 @@ const Container = styled.div`
   padding: 20px 80px 15px 80px;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
-  background-color: ${({ isscrolltop }) => (isscrolltop === 'true' ? 'transparent' : 'white')};
   border-bottom: ${({ isscrolltop }) => isscrolltop === 'false' && '1px solid #DDDDDD'};
 `;
 
-const NavFormContainer = styled.div``;
+const NavFormContainer = styled.div`
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: calc(50vw - 425px);
+  width: 850px;
+  flex-direction: column;
+  /* display: ${({ isscrolltop, isbuttonnclicked }) =>
+    isscrolltop === 'true' || isbuttonnclicked === 'true' ? 'flex' : 'none'}; */
+`;
 
-const ScrollFormButton = styled.div``;
+const ScrollFormButtonContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: ${({ isbuttonnclicked }) => isbuttonnclicked === 'true' && 'none'};
+`;
 
 export default Header;
