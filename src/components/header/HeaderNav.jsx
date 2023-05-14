@@ -34,7 +34,7 @@ const NavStyle = styled.nav`
   padding: 20px;
 
   ${({ isscrolltop, isbuttonnclicked }) =>
-    isscrolltop === 'false' || isbuttonnclicked === 'true'
+    isscrolltop === 'false' || isbuttonnclicked === 'false'
       ? css`
           color: white;
           & ${SpanText}::before {

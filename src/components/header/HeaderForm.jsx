@@ -15,7 +15,7 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
   } = headerRefs;
 
   return (
-    <FormStyle ref={formRef}>
+    <FormStyle ref={formRef} isbuttonnclicked={isbuttonnclicked}>
       <Wrapper
         ref={placeWrapperRef}
         name="place"
@@ -57,14 +57,14 @@ const HeaderForm = ({ isscrolltop, isbuttonnclicked, formSelect, headerRefs, sel
 
 const FormStyle = styled.form`
   position: relative;
-  display: flex;
   background-color: white;
   width: 100%;
   height: 66px;
   border-radius: 10rem;
 
-  border: ${({ isbuttonnclicked }) =>
-    isbuttonnclicked === 'true' ? '1px solid #dddddd' : '1px solid transparent'};
+  border: 1px solid #dddddd;
+
+  display: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? 'flex' : 'none')};
 `;
 
 const TextWrapper = styled.div`
