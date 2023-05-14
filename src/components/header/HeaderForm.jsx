@@ -94,6 +94,10 @@ const FormStyle = styled.form`
 
   border: 1px solid #dddddd;
 
+  &:focus-within {
+    background-color: #ebebeb;
+  }
+
   display: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? 'flex' : 'none')};
 `;
 
