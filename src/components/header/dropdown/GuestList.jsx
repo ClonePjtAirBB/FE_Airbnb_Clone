@@ -156,6 +156,10 @@ const CountButton = styled.button`
     `}
 `;
 
-const GuestsCountContainer = styled.span``;
+const GuestsCountContainer = styled.span`
+  width: 15px;
+  display: flex;
+  justify-content: center;
+`;
 
 export default GuestList;
