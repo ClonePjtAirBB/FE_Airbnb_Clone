@@ -2,6 +2,7 @@ import { css, styled } from 'styled-components';
 import SearchIcon from './SearchIcon';
 import GuestsDropdown from './dropdown/GuestsDropdown';
 import PlaceDropDown from './dropdown/PlaceDropdown';
+import CalendarDropdown from './dropdown/CalendarDropdown';
 
 const HeaderForm = ({
   isscrolltop,
@@ -60,6 +61,7 @@ const HeaderForm = ({
           <TextDesc value={checkIn}>{checkIn || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
+      <CalendarDropdown ref={calendarDropdownRef} formselect={formselect} formData={formData} />
 
       <Wrapper
         ref={checkOutWrapperRef}

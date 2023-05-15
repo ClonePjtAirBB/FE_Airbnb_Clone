@@ -47,10 +47,12 @@ const DropdownBox = styled.div`
   padding: ${({ padding }) => padding};
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: white;
-  border: 0.5px solid #ebebeb;
+  background-color: ${({ formselect }) => (formselect === 'checkIn' ? 'transparent' : 'white')};
+  border: ${({ formselect }) => (formselect === 'checkIn' ? 'transparent' : '0.5px solid #ebebeb')};
   border-radius: 32px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 37px;
+  box-shadow: ${({ formselect }) =>
+    formselect === 'checkIn' ? 'none' : ' rgba(0, 0, 0, 0.15) 0px 10px 37px'};
+
   z-index: 10;
 `;
 
