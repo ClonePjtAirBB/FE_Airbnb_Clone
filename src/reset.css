@@ -126,4 +126,5 @@ input:focus {
 button {
   border: 0 none;
   background: none;
+  cursor: pointer;
 }
