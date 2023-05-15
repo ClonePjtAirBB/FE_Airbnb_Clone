@@ -21,7 +21,7 @@ const Header = ({
       initanimation={initanimation.toString()}
     >
       <Link to={PATH_URL.MAIN}>
-        <HeaderLogo />
+        <HeaderLogo onClick={onClickLogoHandler} />
       </Link>
       <NavFormContainer
         isscrolltop={isscrolltop.toString()}
