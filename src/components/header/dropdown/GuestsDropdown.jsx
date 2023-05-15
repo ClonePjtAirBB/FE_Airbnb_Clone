@@ -21,6 +21,7 @@ const GuestsDropdown = forwardRef(
               decreaseGuestCount={decreaseGuestCount}
               guests={guests}
               adult={adult}
+              stcount={adult}
             />
             <GuestList
               label="어린이"
@@ -29,6 +30,7 @@ const GuestsDropdown = forwardRef(
               decreaseGuestCount={decreaseGuestCount}
               guests={guests}
               children={children}
+              stcount={children}
             />
             <GuestList
               label="유아"
@@ -37,6 +39,7 @@ const GuestsDropdown = forwardRef(
               decreaseGuestCount={decreaseGuestCount}
               guests={guests}
               infant={infant}
+              stcount={infant}
             />
             <GuestList
               label="반려동물"
@@ -45,6 +48,7 @@ const GuestsDropdown = forwardRef(
               decreaseGuestCount={decreaseGuestCount}
               guests={guests}
               pet={pet}
+              stcount={pet}
             />
           </GuestsUl>
         </DropdownWrapper>

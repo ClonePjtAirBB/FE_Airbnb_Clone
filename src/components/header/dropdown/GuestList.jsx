@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { FiPlus, FiMinus } from 'react-icons/fi';
 
 const GuestList = ({
@@ -11,24 +11,47 @@ const GuestList = ({
   children,
   infant,
   pet,
+  stcount,
 }) => {
+  let guestsCountValue;
+  switch (label) {
+    case '성인':
+      guestsCountValue = adult;
+      break;
+    case '어린이':
+      guestsCountValue = children;
+      break;
+    case '유아':
+      guestsCountValue = infant;
+      break;
+    case '반려동물':
+      guestsCountValue = pet;
+      break;
+    default:
+      guestsCountValue = 0;
+      break;
+  }
+
   const minusButtonClickHandler = e => {
     e.preventDefault();
-    switch (label) {
-      case '성인':
-        decreaseGuestCount(guests, 'adult');
-        break;
-      case '어린이':
-        decreaseGuestCount(guests, 'children');
-        break;
-      case '유아':
-        decreaseGuestCount(guests, 'infant');
-        break;
-      case '반려동물':
-        decreaseGuestCount(guests, 'pet');
-        break;
-      default:
-        break;
+    if (guestsCountValue === 0) return;
+    else {
+      switch (label) {
+        case '성인':
+          decreaseGuestCount(guests, 'adult');
+          break;
+        case '어린이':
+          decreaseGuestCount(guests, 'children');
+          break;
+        case '유아':
+          decreaseGuestCount(guests, 'infant');
+          break;
+        case '반려동물':
+          decreaseGuestCount(guests, 'pet');
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -52,25 +75,6 @@ const GuestList = ({
     }
   };
 
-  let guestsCountValue;
-  switch (label) {
-    case '성인':
-      guestsCountValue = adult;
-      break;
-    case '어린이':
-      guestsCountValue = children;
-      break;
-    case '유아':
-      guestsCountValue = infant;
-      break;
-    case '반려동물':
-      guestsCountValue = pet;
-      break;
-    default:
-      guestsCountValue = 0;
-      break;
-  }
-
   return (
     <GuestLi>
       <TextWrapper>
@@ -79,7 +83,7 @@ const GuestList = ({
       </TextWrapper>
 
       <CounterContainer>
-        <CountButton onClick={minusButtonClickHandler}>
+        <CountButton onClick={minusButtonClickHandler} stcount={stcount} minus>
           <FiMinus />
         </CountButton>
 
@@ -137,6 +141,19 @@ const CountButton = styled.button`
     color: black;
     border-color: black;
   }
+
+  ${({ stcount, minus }) =>
+    minus &&
+    !stcount &&
+    css`
+      border-color: #ebebeb;
+      color: #ebebeb;
+      cursor: not-allowed;
+      &:hover {
+        border-color: #ebebeb;
+        color: #ebebeb;
+      }
+    `}
 `;
 
 const GuestsCountContainer = styled.span``;
