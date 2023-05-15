@@ -34,7 +34,7 @@ const initialState = {
   checkOut: '',
   guests: {
     adult: 0,
-    child: 0,
+    children: 0,
     infant: 0,
     pet: 0,
   },

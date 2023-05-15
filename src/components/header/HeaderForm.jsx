@@ -11,6 +11,8 @@ const HeaderForm = ({
   headerRefs,
   selectHandler,
   formData,
+  addGuestCount,
+  decreaseGuestCount,
 }) => {
   const {
     formRef,
@@ -85,7 +87,14 @@ const HeaderForm = ({
           <SearchIcon size="48px" iconSize="16px" />
         </IconContainer>
       </Wrapper>
-      <GuestsDropdown ref={guestDropdownRef} formselect={formselect} formData={formData} />
+
+      <GuestsDropdown
+        ref={guestDropdownRef}
+        formselect={formselect}
+        formData={formData}
+        addGuestCount={addGuestCount}
+        decreaseGuestCount={decreaseGuestCount}
+      />
     </FormStyle>
   );
 };

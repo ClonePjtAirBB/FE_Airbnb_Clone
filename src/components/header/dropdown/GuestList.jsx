@@ -1,7 +1,76 @@
 import { styled } from 'styled-components';
 import { FiPlus, FiMinus } from 'react-icons/fi';
 
-const GuestList = ({ label, description }) => {
+const GuestList = ({
+  label,
+  description,
+  addGuestCount,
+  decreaseGuestCount,
+  guests,
+  adult,
+  children,
+  infant,
+  pet,
+}) => {
+  const minusButtonClickHandler = e => {
+    e.preventDefault();
+    switch (label) {
+      case '성인':
+        decreaseGuestCount(guests, 'adult');
+        break;
+      case '어린이':
+        decreaseGuestCount(guests, 'children');
+        break;
+      case '유아':
+        decreaseGuestCount(guests, 'infant');
+        break;
+      case '반려동물':
+        decreaseGuestCount(guests, 'pet');
+        break;
+      default:
+        break;
+    }
+  };
+
+  const plusButtonClickHanlder = e => {
+    e.preventDefault();
+    switch (label) {
+      case '성인':
+        addGuestCount(guests, 'adult');
+        break;
+      case '어린이':
+        addGuestCount(guests, 'children');
+        break;
+      case '유아':
+        addGuestCount(guests, 'infant');
+        break;
+      case '반려동물':
+        addGuestCount(guests, 'pet');
+        break;
+      default:
+        break;
+    }
+  };
+
+  let guestsCountValue;
+  switch (label) {
+    case '성인':
+      guestsCountValue = adult;
+      break;
+    case '어린이':
+      guestsCountValue = children;
+      break;
+    case '유아':
+      guestsCountValue = infant;
+      break;
+    case '반려동물':
+      guestsCountValue = pet;
+      break;
+    default:
+      guestsCountValue = 0;
+      break;
+  }
+
   return (
     <GuestLi>
       <TextWrapper>
@@ -10,13 +79,13 @@ const GuestList = ({ label, description }) => {
       </TextWrapper>
 
       <CounterContainer>
-        <CountButton>
+        <CountButton onClick={minusButtonClickHandler}>
           <FiMinus />
         </CountButton>
 
-        <GuestsCountContainer>1</GuestsCountContainer>
+        <GuestsCountContainer>{guestsCountValue}</GuestsCountContainer>
 
-        <CountButton>
+        <CountButton onClick={plusButtonClickHanlder}>
           <FiPlus />
         </CountButton>
       </CounterContainer>
