@@ -1,33 +1,46 @@
-import { forwardRef, useCallback, useEffect } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import Dropdown from '../../global/Dropdown';
 import { DatePicker, useDatePickGetter, useDatePickReset } from '@bcad1591/react-date-picker';
+import React from 'react';
 
 const CalendarDropdown = forwardRef(({ formselect, changeFormData }, ref) => {
+  const [isCheckInClicked, setIsCheckInClicked] = useState(false);
+  const [isCheckOutClicked, setIsCheckOutClicked] = useState(false);
   const { pickedDates } = useDatePickGetter();
   const resetFunc = useDatePickReset();
 
-  // const changeFormDataHandler = useCallback(
-  //   checkInDate => {
-  //     changeFormData('checkIn', checkInDate);
-  //     console.log('checkIn!!');
-  //   },
-  //   [changeFormData]
-  // );
+  if (pickedDates.firstPickedDate && isCheckInClicked === false) {
+    setIsCheckInClicked(true);
+  }
+  if (pickedDates.secondPickedDate && isCheckOutClicked === false) {
+    setIsCheckOutClicked(true);
+  }
 
-  // useEffect(() => {
-  //   if (pickedDates.firstPickedDate) {
-  //     const checkInDate = `${pickedDates.firstPickedDate.toISOString()}`.slice(0, 10);
-  //     changeFormDataHandler(checkInDate);
-  //     console.log('useEffect~~');
-  //   }
-  // }, [changeFormDataHandler]);
+  useEffect(() => {
+    if (pickedDates.firstPickedDate) {
+      // TODO: 한국 시간과 하루 차이가 있어 조정 필요
+      const checkInDate = `${pickedDates.firstPickedDate.toISOString()}`.slice(0, 10);
+      changeFormData('checkIn', checkInDate);
+      console.log(checkInDate);
+    }
+  }, [isCheckInClicked]);
+
+  useEffect(() => {
+    if (pickedDates.secondPickedDate) {
+      // TODO: 한국 시간과 하루 차이가 있어 조정 필요
+      const checkOutDate = `${pickedDates.secondPickedDate.toISOString()}`.slice(0, 10);
+      changeFormData('checkOut', checkOutDate);
+      console.log(checkOutDate);
+    }
+  }, [isCheckOutClicked]);
 
   return (
     <Container ref={ref}>
       <DropdownWrapper dropdownState={formselect === 'checkIn'} formselect={formselect}>
         <CalendarContainer>
           <DatePicker disablePreviousDays />
+          <div>{pickedDates.firstPickedDate?.toString()}</div>
 
           {/* <div>{pickedDates.firstPickedDate?.toString()}</div>
           <div>{pickedDates.secondPickedDate?.toString()}</div>
@@ -52,4 +65,4 @@ const DropdownWrapper = styled(Dropdown)`
 
 const CalendarContainer = styled.div``;
 
-export default CalendarDropdown;
+export default React.memo(CalendarDropdown);
