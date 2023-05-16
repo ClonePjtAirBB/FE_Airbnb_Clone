@@ -62,6 +62,10 @@ const Container = styled.div`
   border-bottom: 1px solid #ebebeb;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
+
+  :first-child {
+    cursor: pointer;
+  }
 `;
 
 const slideDown = keyframes`
