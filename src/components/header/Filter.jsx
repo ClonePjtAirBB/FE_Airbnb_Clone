@@ -23,12 +23,10 @@ const Container = styled.div`
 
   display: grid;
   grid-auto-flow: column;
-  /* justify-content: flex-start; */
   justify-content: space-between;
   align-items: center;
   gap: 32px;
-
-  padding: 0 50px;
+  padding: 0 80px;
 `;
 
 export default Filter;
