@@ -1,11 +1,28 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { PATH_URL } from '../constants';
+import { getAllList } from '../apis/stayList';
 
 const Main = () => {
   const navigate = useNavigate();
+
+  const testHandler = async () => {
+    try {
+      const res = await getAllList();
+      console.log('Mainpage res => ', res);
+    } catch (error) {
+      console.log('Mainpage testHandler error => ', error);
+    }
+  };
+
   return (
     <>
+      <button
+        onClick={testHandler}
+        style={{ height: '100px', width: '300px', backgroundColor: 'lightgrey' }}
+      >
+        TEST
+      </button>
       <StmainContainer>
         <StlistContainer>
           <StcardContainer>
