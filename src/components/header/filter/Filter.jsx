@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import FilterItem from './FilterItem';
-import { filterOptions } from '../../shared/filterOptions';
+import { filterOptions } from '../../../shared/filterOptions';
 
 const Filter = () => {
   return (
