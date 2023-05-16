@@ -27,7 +27,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   };
 
   const changeFormData = (name, value) => {
-    const data = { name, value };
+    const data = { name, value }; // {'place/checkIn/checkOut/guests', payload}
     dispatch(setFormData(data));
   };
 
@@ -97,6 +97,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
       formData={formData}
       addGuestCount={addGuestCount}
       decreaseGuestCount={decreaseGuestCount}
+      changeFormData={changeFormData}
     />
   );
 };

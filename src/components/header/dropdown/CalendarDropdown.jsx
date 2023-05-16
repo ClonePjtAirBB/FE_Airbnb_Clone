@@ -1,11 +1,27 @@
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useEffect } from 'react';
 import { styled } from 'styled-components';
 import Dropdown from '../../global/Dropdown';
 import { DatePicker, useDatePickGetter, useDatePickReset } from '@bcad1591/react-date-picker';
 
-const CalendarDropdown = forwardRef(({ formselect }, ref) => {
+const CalendarDropdown = forwardRef(({ formselect, changeFormData }, ref) => {
   const { pickedDates } = useDatePickGetter();
   const resetFunc = useDatePickReset();
+
+  // const changeFormDataHandler = useCallback(
+  //   checkInDate => {
+  //     changeFormData('checkIn', checkInDate);
+  //     console.log('checkIn!!');
+  //   },
+  //   [changeFormData]
+  // );
+
+  // useEffect(() => {
+  //   if (pickedDates.firstPickedDate) {
+  //     const checkInDate = `${pickedDates.firstPickedDate.toISOString()}`.slice(0, 10);
+  //     changeFormDataHandler(checkInDate);
+  //     console.log('useEffect~~');
+  //   }
+  // }, [changeFormDataHandler]);
 
   return (
     <Container ref={ref}>

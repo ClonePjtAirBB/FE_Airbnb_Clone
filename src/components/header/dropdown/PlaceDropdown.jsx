@@ -3,24 +3,30 @@ import { forwardRef } from 'react';
 import Dropdown from '../../global/Dropdown';
 import korMapImg from '../../assets/header-place-korea-map.svg';
 
-const PlaceDropDown = forwardRef(({ formselect, formData }, ref) => {
+const PlaceDropdown = forwardRef(({ formselect, formData, changeFormData }, ref) => {
+  const placeSelectHandler = placeType => {
+    changeFormData('place', placeType);
+    console.log('1.placeDropdown', formData);
+  };
+
   return (
     <Container ref={ref}>
       <DropdownWrapper dropdownState={formselect === 'place'}>
         <TextLabel>지역으로 검색하기</TextLabel>
         <PlaceContainer>
-          <PlaceWrapper>
+          {/* TODO: 전체일 경우 이름 결정 안됨 */}
+          <PlaceWrapper onClick={() => placeSelectHandler('전체')}>
             <Img
               alt="world map"
               src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
             />
             <PlaceText>유연한 검색</PlaceText>
           </PlaceWrapper>
-          <PlaceWrapper>
+          <PlaceWrapper onClick={() => placeSelectHandler('한국')}>
             <KorImg></KorImg>
             <PlaceText isKor>한국</PlaceText>
           </PlaceWrapper>
-          <PlaceWrapper>
+          <PlaceWrapper onClick={() => placeSelectHandler('일본')}>
             <Img
               alt="japan map"
               src="https://a0.muscache.com/im/pictures/26891a81-b9db-4a9c-8aab-63486b7e627c.jpg?im_w=320"
@@ -104,4 +110,4 @@ const Img = styled.img`
   }
 `;
 
-export default PlaceDropDown;
+export default PlaceDropdown;
