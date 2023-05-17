@@ -43,7 +43,7 @@ const CalendarDropdown = forwardRef(({ formselect, changeFormData, selectHandler
       >
         <CalendarContainer>
           <DatePicker disablePreviousDays />
-          <div>{pickedDates.firstPickedDate?.toString()}</div>
+          {/* <div>{pickedDates.firstPickedDate?.toString()}</div> */}
 
           {/* <div>{pickedDates.firstPickedDate?.toString()}</div>
           <div>{pickedDates.secondPickedDate?.toString()}</div>
