@@ -4,46 +4,32 @@ import { PATH_URL } from '../constants';
 import { getAllList } from '../apis/stayList';
 import Filter from '../components/header/filter/Filter';
 import { getFilteredList } from '../apis/stayList';
-
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const Main = () => {
   const navigate = useNavigate();
-
-  // all list
-  const testHandler = async () => {
-    try {
-      const res = await getAllList();
-      console.log('Mainpage res => ', res);
-    } catch (error) {
-      console.log('Mainpage testHandler error => ', error);
-    }
-  };
+  const [cards, setCards] = useState([]);
 
   const getStayTypeFilteredHandler = async queryString => {
     try {
       const res = await getFilteredList(queryString);
-      console.log('Filter res => ', res);
+      setCards(res);
     } catch (error) {
-      console.log('Filter error => ', error);
+      console.log('Mainpage getStayTypeFilteredHandler error => ', error);
     }
   };
-
-  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     async function mainList() {
       try {
-        const { data } = await axios.get(`http://43.200.169.48/api/stay`);
-        setCards(data);
+        const res = await getAllList();
+        setCards(res);
       } catch (error) {
-        console.error(error);
+        console.log('Mainpage mainList error => ', error);
       }
     }
     mainList();
   }, []);
-  console.log(cards);
 
   return (
     <>
