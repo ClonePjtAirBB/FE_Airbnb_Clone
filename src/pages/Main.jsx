@@ -29,7 +29,7 @@ const Main = () => {
           <StcardContainer>
             {cards?.map(item => (
               <Stcard key={item.stayId}>
-                <Stcardpic Stcardpic onClick={() => navigate(PATH_URL.DETAIL)}>
+                <Stcardpic onClick={() => navigate(PATH_URL.DETAIL)}>
                   <Stpic src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720" />
                   <Stcardpic1></Stcardpic1>
                   <Stcardpic2></Stcardpic2>
