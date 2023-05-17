@@ -14,7 +14,7 @@ const Router = () => {
           <Route path={PATH_URL.MAIN} element={<Main />} />
           <Route path={PATH_URL.LOGIN} element={<Login />} />
           <Route path={PATH_URL.SIGNUP} element={<Signin />} />
-          <Route path={PATH_URL.DETAIL} element={<Detail />} />
+          <Route path={PATH_URL.PATH_DETAIL} element={<Detail />} />
         </Routes>
       </Layout>
     </BrowserRouter>
