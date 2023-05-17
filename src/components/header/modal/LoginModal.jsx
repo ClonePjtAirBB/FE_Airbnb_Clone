@@ -68,8 +68,13 @@ const Input = styled.input`
   border-radius: 10px;
   padding: 0 10px;
 
-  ::placeholder {
-    color: #dddddd;
+  &::placeholder {
+    color: #b0b0b0;
+  }
+
+  &:focus {
+    transition: 0.5s;
+    border: 1.5px solid black;
   }
 `;
 
