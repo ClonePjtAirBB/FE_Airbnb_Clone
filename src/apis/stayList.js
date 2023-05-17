@@ -19,3 +19,12 @@ export const getFilteredList = async queryString => {
     throw new Error('API getFilteredist error');
   }
 };
+//추가
+export const getDetailList = async id => {
+  try {
+    const response = await apiRequest.get(`${RESOURCE}/${id}`);
+    return response;
+  } catch (error) {
+    throw new Error('API getDetailList error');
+  }
+};
