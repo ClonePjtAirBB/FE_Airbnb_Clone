@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 const LoginModal = () => {
   return (
-    <Container>
+    <Container onClick={e => e.stopPropagation()}>
       <LabelWrapper>
         <Label>로그인 또는 회원 가입</Label>
       </LabelWrapper>
