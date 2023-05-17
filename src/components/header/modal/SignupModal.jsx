@@ -3,34 +3,41 @@ import useAuthInput from '../../../hooks/useAuthInput';
 import { auth } from '../../../apis/auth';
 import { PATH_URL } from '../../../constants';
 
-const LoginModal = ({ closeModalHandler, setShowSignupModal, setShowSigninModal }) => {
+const SignupModal = ({ closeModalHandler, setShowSignupModal, setShowSigninModal }) => {
   const { inputData: email, inputChangeHandler: emailChangeHandler } = useAuthInput();
   const { inputData: password, inputChangeHandler: passwordChangeHandler } = useAuthInput();
+  const { inputData: nickname, inputChangeHandler: nicknameChangeHandler } = useAuthInput();
 
   const inputDataSubmitHandler = async e => {
     e.preventDefault();
     try {
-      const res = await auth({ email, password }, PATH_URL.SIGNIN);
+      const res = await auth({ email, password }, PATH_URL.SIGNUP);
       alert(res.msg);
       closeModalHandler();
     } catch (error) {}
   };
 
-  const signupButtonClickHandler = e => {
+  const signipButtonClickHandler = e => {
     e.preventDefault();
-    setShowSignupModal(true);
-    setShowSigninModal(false);
+    setShowSignupModal(false);
+    setShowSigninModal(true);
   };
 
   return (
     <Container onClick={e => e.stopPropagation()}>
       <LabelWrapper>
-        <Label>로그인</Label>
+        <Label>회원 가입</Label>
       </LabelWrapper>
 
       <AuthWrapper>
         <H3Label>에어비앤비에 오신 것을 환영합니다.</H3Label>
         <Form onSubmit={inputDataSubmitHandler}>
+          <Input
+            placeholder="닉네임"
+            type="text"
+            value={nickname}
+            onChange={nicknameChangeHandler}
+          />
           <Input placeholder="이메일" type="email" value={email} onChange={emailChangeHandler} />
           <Input
             placeholder="비밀번호"
@@ -39,20 +46,20 @@ const LoginModal = ({ closeModalHandler, setShowSignupModal, setShowSigninModal 
             onChange={passwordChangeHandler}
           />
 
-          <LoginButton>로그인</LoginButton>
+          <LoginButton>회원 가입</LoginButton>
           <DivisionLine>또는</DivisionLine>
         </Form>
-        <SigninButton onClick={signupButtonClickHandler}>회원가입</SigninButton>
+        <SigninButton onClick={signipButtonClickHandler}>로그인</SigninButton>
       </AuthWrapper>
     </Container>
   );
 };
 
-export default LoginModal;
+export default SignupModal;
 
 const Container = styled.div`
   width: 568px;
-  height: 500px;
+  height: 550px;
   padding: 10px;
   background-color: white;
   border-radius: 12px;

@@ -2,11 +2,11 @@ import apiRequest from './index';
 
 const RESOURCE = '/api/user';
 
-export const signin = async signinData => {
+export const auth = async (signinData, path) => {
   try {
-    const response = await apiRequest.post(`${RESOURCE}/signin`, signinData);
+    const response = await apiRequest.post(`${RESOURCE}${path}`, signinData);
     return response;
   } catch (error) {
-    throw new Error('API login error');
+    throw new Error('API auth error');
   }
 };

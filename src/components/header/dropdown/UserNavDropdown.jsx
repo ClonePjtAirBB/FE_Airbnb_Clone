@@ -1,9 +1,16 @@
 import { styled } from 'styled-components';
 import LoginModal from '../modal/LoginModal';
+import { useState } from 'react';
+import SignupModal from '../modal/SignupModal';
 
 const UserNavDropdown = ({ setIsUserDropdownOpen, isModalOpen, setIsModalOpen }) => {
-  const dropdownClickHandler = () => {
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showSigninModal, setShowSigninModal] = useState(false);
+
+  const dropdownClickHandler = clickType => {
     setIsModalOpen(true);
+    if (clickType === 'signin') setShowSigninModal(true);
+    if (clickType === 'signup') setShowSignupModal(true);
   };
 
   const closeModalHandler = () => {
@@ -14,13 +21,26 @@ const UserNavDropdown = ({ setIsUserDropdownOpen, isModalOpen, setIsModalOpen })
   return (
     <>
       <StContainer>
-        <StDropdownLi onClick={dropdownClickHandler}>로그인</StDropdownLi>
-        <StDropdownLi>회원가입</StDropdownLi>
-        <StDropdownLi onClick={() => setIsModalOpen(true)}>도움말</StDropdownLi>
+        <StDropdownLi onClick={() => dropdownClickHandler('signin')}>로그인</StDropdownLi>
+        <StDropdownLi onClick={() => dropdownClickHandler('signup')}>회원가입</StDropdownLi>
+        <StDropdownLi>도움말</StDropdownLi>
       </StContainer>
       {isModalOpen && (
         <ModalBackground onClick={closeModalHandler}>
-          <LoginModal closeModalHandler={closeModalHandler} />
+          {showSigninModal && (
+            <LoginModal
+              closeModalHandler={closeModalHandler}
+              setShowSignupModal={setShowSignupModal}
+              setShowSigninModal={setShowSigninModal}
+            />
+          )}
+          {showSignupModal && (
+            <SignupModal
+              closeModalHandler={closeModalHandler}
+              setShowSignupModal={setShowSignupModal}
+              setShowSigninModal={setShowSigninModal}
+            />
+          )}
         </ModalBackground>
       )}
     </>
