@@ -49,6 +49,10 @@ const Button = styled.button`
   font-size: 14px;
   color: #222222;
   height: 42px;
+
+  @media screen and (max-width: 1079px) {
+    display: none;
+  }
 `;
 
 const UserContainer = styled.button`
