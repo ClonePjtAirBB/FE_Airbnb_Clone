@@ -3,10 +3,10 @@ import { forwardRef } from 'react';
 import Dropdown from '../../global/Dropdown';
 import korMapImg from '../../assets/header-place-korea-map.svg';
 
-const PlaceDropdown = forwardRef(({ formselect, formData, changeFormData }, ref) => {
+const PlaceDropdown = forwardRef(({ formselect, formData, changeFormData, selectHandler }, ref) => {
   const placeSelectHandler = placeType => {
     changeFormData('place', placeType);
-    console.log('1.placeDropdown', formData);
+    selectHandler('checkIn');
   };
 
   return (

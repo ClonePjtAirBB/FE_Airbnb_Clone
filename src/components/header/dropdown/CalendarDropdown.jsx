@@ -4,7 +4,7 @@ import Dropdown from '../../global/Dropdown';
 import { DatePicker, useDatePickGetter, useDatePickReset } from '@bcad1591/react-date-picker';
 import React from 'react';
 
-const CalendarDropdown = forwardRef(({ formselect, changeFormData }, ref) => {
+const CalendarDropdown = forwardRef(({ formselect, changeFormData, selectHandler }, ref) => {
   const [isCheckInClicked, setIsCheckInClicked] = useState(false);
   const [isCheckOutClicked, setIsCheckOutClicked] = useState(false);
   const { pickedDates } = useDatePickGetter();
@@ -22,7 +22,7 @@ const CalendarDropdown = forwardRef(({ formselect, changeFormData }, ref) => {
       // TODO: 한국 시간과 하루 차이가 있어 조정 필요
       const checkInDate = `${pickedDates.firstPickedDate.toISOString()}`.slice(0, 10);
       changeFormData('checkIn', checkInDate);
-      console.log(checkInDate);
+      selectHandler('checkOut');
     }
   }, [isCheckInClicked]);
 
@@ -31,13 +31,16 @@ const CalendarDropdown = forwardRef(({ formselect, changeFormData }, ref) => {
       // TODO: 한국 시간과 하루 차이가 있어 조정 필요
       const checkOutDate = `${pickedDates.secondPickedDate.toISOString()}`.slice(0, 10);
       changeFormData('checkOut', checkOutDate);
-      console.log(checkOutDate);
+      selectHandler('guests');
     }
   }, [isCheckOutClicked]);
 
   return (
     <Container ref={ref}>
-      <DropdownWrapper dropdownState={formselect === 'checkIn'} formselect={formselect}>
+      <DropdownWrapper
+        dropdownState={formselect === 'checkIn' || formselect === 'checkOut'}
+        formselect={formselect}
+      >
         <CalendarContainer>
           <DatePicker disablePreviousDays />
           <div>{pickedDates.firstPickedDate?.toString()}</div>

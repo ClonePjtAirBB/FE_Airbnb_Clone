@@ -33,10 +33,10 @@ const HeaderForm = ({
     guestDropdownRef,
   } = headerRefs;
 
+  const { adult, children, infant, pet } = guests;
+  const guestCount = adult + children + infant + pet;
   // 돋보기 아이콘 클릭 시 서버 요청
   const filterSubmitHandler = () => {
-    const { adult, children, infant, pet } = guests;
-    const guestCount = adult + children + infant + pet;
     const requestUrl = `/api/stay/search?country=${place}&checkin_date=${checkIn}&checkout_date=${checkOut}&groupsize=${guestCount}`;
 
     console.log(requestUrl);
@@ -80,7 +80,7 @@ const HeaderForm = ({
         <PlaceContainer>
           <TextWrapper>
             <TextLabel>여행지</TextLabel>
-            <TextDesc value={place}>여행지 검색</TextDesc>
+            <TextDesc value={place}>{place || '여행지 검색'}</TextDesc>
           </TextWrapper>
         </PlaceContainer>
       </Wrapper>
@@ -89,6 +89,7 @@ const HeaderForm = ({
         formselect={formselect}
         formData={formData}
         changeFormData={changeFormData}
+        selectHandler={selectHandler}
       />
 
       <Wrapper
@@ -108,6 +109,7 @@ const HeaderForm = ({
         formselect={formselect}
         formData={formData}
         changeFormData={changeFormData}
+        selectHandler={selectHandler}
       />
 
       <Wrapper
@@ -126,7 +128,9 @@ const HeaderForm = ({
       <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%" tabIndex="4">
         <TextWrapper>
           <TextLabel>여행자</TextLabel>
-          <TextDesc>게스트 추가</TextDesc>
+          <TextDesc value={guestCount}>
+            {(guestCount !== 0 && `게스트 ${guestCount}명`) || '게스트 추가'}
+          </TextDesc>
         </TextWrapper>
 
         <IconContainer onClick={filterSubmitHandler}>

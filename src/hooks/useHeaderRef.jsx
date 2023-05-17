@@ -22,6 +22,7 @@ const useHeaderRef = () => {
     checkOutDropdownRef,
     guestWrapperRef,
     guestDropdownRef,
+    calendarDropdownRef,
   };
 
   return headerRefs;
