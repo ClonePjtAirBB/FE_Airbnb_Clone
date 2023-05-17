@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import { throttle } from 'lodash';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH_URL } from '../../constants';
 
 const HeaderContainer = () => {
   const [isscrolltop, setIsScrollTop] = useState(window.scrollY < 40);
   const [isbuttonnclicked, setIsButtonClicked] = useState(false);
   const [initanimation, setInitAnimation] = useState(false);
+  const navigate = useNavigate();
 
   const onScrollHandler = e => {
     setIsScrollTop(e && window.scrollY < 40);
@@ -15,6 +18,7 @@ const HeaderContainer = () => {
 
   const onClickLogoHandler = e => {
     e.preventDefault();
+    navigate(PATH_URL.MAIN);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -33,13 +37,15 @@ const HeaderContainer = () => {
   }, [onScrollHandler, initanimation]);
 
   return (
-    <Header
-      isscrolltop={isscrolltop}
-      isbuttonnclicked={isbuttonnclicked}
-      initanimation={initanimation}
-      onClickLogoHandler={onClickLogoHandler}
-      onClickButtonHandler={onClickButtonHandler}
-    />
+    <>
+      <Header
+        isscrolltop={isscrolltop}
+        isbuttonnclicked={isbuttonnclicked}
+        initanimation={initanimation}
+        onClickLogoHandler={onClickLogoHandler}
+        onClickButtonHandler={onClickButtonHandler}
+      />
+    </>
   );
 };
 

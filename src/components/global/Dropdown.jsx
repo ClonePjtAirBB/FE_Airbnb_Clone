@@ -47,11 +47,15 @@ const DropdownBox = styled.div`
   padding: ${({ padding }) => padding};
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: ${({ formselect }) => (formselect === 'checkIn' ? 'transparent' : 'white')};
-  border: ${({ formselect }) => (formselect === 'checkIn' ? 'transparent' : '0.5px solid #ebebeb')};
+  background-color: ${({ formselect }) =>
+    formselect === 'checkIn' || formselect === 'checkOut' ? 'transparent' : 'white'};
+  border: ${({ formselect }) =>
+    formselect === 'checkIn' || formselect === 'checkOut' ? 'transparent' : '0.5px solid #ebebeb'};
   border-radius: 32px;
   box-shadow: ${({ formselect }) =>
-    formselect === 'checkIn' ? 'none' : ' rgba(0, 0, 0, 0.15) 0px 10px 37px'};
+    formselect === 'checkIn' || formselect === 'checkOut'
+      ? 'none'
+      : ' rgba(0, 0, 0, 0.15) 0px 10px 37px'};
 
   z-index: 10;
 `;

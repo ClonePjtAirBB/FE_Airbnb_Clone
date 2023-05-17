@@ -3,6 +3,7 @@ import SearchIcon from './SearchIcon';
 import GuestsDropdown from './dropdown/GuestsDropdown';
 import PlaceDropDown from './dropdown/PlaceDropdown';
 import CalendarDropdown from './dropdown/CalendarDropdown';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderForm = ({
   isscrolltop,
@@ -13,7 +14,12 @@ const HeaderForm = ({
   formData,
   addGuestCount,
   decreaseGuestCount,
+  changeFormData,
 }) => {
+  // redux 데이터
+  const { place, checkIn, checkOut, guests } = formData;
+
+  // 드롭다운, 클릭 시 흰색 박스 효과에 사용되는 ref
   const {
     formRef,
     placeWrapperRef,
@@ -27,10 +33,39 @@ const HeaderForm = ({
     guestDropdownRef,
   } = headerRefs;
 
-  const { place, checkIn, checkOut, guests } = formData;
+  const { adult, children, infant, pet } = guests;
+  const guestCount = adult + children + infant + pet;
+  // 돋보기 아이콘 클릭 시 서버 요청
+  const filterSubmitHandler = () => {
+    const requestUrl = `/api/stay/search?country=${place}&checkin_date=${checkIn}&checkout_date=${checkOut}&groupsize=${guestCount}`;
 
-  // TEST CODE
-  console.log('HeaderForm rendering');
+    console.log(requestUrl);
+
+    // TEST : 서버 요청 후 응답데이터
+    const testServerData = [
+      {
+        stayId: 4,
+        country: '대한민국',
+        city: '서울',
+        host: 'Oliver',
+        costperday: 166698,
+        filter: '공동 주택',
+        img: 'imgurl',
+      },
+      {
+        stayId: 5,
+        country: '일본',
+        city: '오사카',
+        host: 'Oliver',
+        costperday: 166698,
+        filter: '공동 주택',
+        img: 'imgurl',
+      },
+    ];
+
+    // 서버 요청, 리스트값 redux로 변경
+    window.scrollTo({ top: 0 });
+  };
 
   return (
     <FormStyle ref={formRef} isbuttonnclicked={isbuttonnclicked}>
@@ -45,11 +80,17 @@ const HeaderForm = ({
         <PlaceContainer>
           <TextWrapper>
             <TextLabel>여행지</TextLabel>
-            <TextDesc value={place}>여행지 검색</TextDesc>
+            <TextDesc value={place}>{place || '여행지 검색'}</TextDesc>
           </TextWrapper>
         </PlaceContainer>
       </Wrapper>
-      <PlaceDropDown ref={placeDropdownRef} formselect={formselect} formData={formData} />
+      <PlaceDropDown
+        ref={placeDropdownRef}
+        formselect={formselect}
+        formData={formData}
+        changeFormData={changeFormData}
+        selectHandler={selectHandler}
+      />
 
       <Wrapper
         ref={checkInWrapperRef}
@@ -63,7 +104,13 @@ const HeaderForm = ({
           <TextDesc value={checkIn}>{checkIn || '날짜 추가'}</TextDesc>
         </TextWrapper>
       </Wrapper>
-      <CalendarDropdown ref={calendarDropdownRef} formselect={formselect} formData={formData} />
+      <CalendarDropdown
+        ref={calendarDropdownRef}
+        formselect={formselect}
+        formData={formData}
+        changeFormData={changeFormData}
+        selectHandler={selectHandler}
+      />
 
       <Wrapper
         ref={checkOutWrapperRef}
@@ -81,9 +128,12 @@ const HeaderForm = ({
       <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%" tabIndex="4">
         <TextWrapper>
           <TextLabel>여행자</TextLabel>
-          <TextDesc>게스트 추가</TextDesc>
+          <TextDesc value={guestCount}>
+            {(guestCount !== 0 && `게스트 ${guestCount}명`) || '게스트 추가'}
+          </TextDesc>
         </TextWrapper>
-        <IconContainer>
+
+        <IconContainer onClick={filterSubmitHandler}>
           <SearchIcon size="48px" iconSize="16px" />
         </IconContainer>
       </Wrapper>

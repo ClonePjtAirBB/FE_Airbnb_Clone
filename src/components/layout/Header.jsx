@@ -1,7 +1,5 @@
 import { styled, keyframes } from 'styled-components';
 import { ReactComponent as HeaderLogo } from '../assets/header-logo.svg';
-import { Link } from 'react-router-dom';
-import { PATH_URL } from '../../constants';
 import HeaderNav from '../header/HeaderNav';
 import HeaderFormContainer from '../header/HeaderFormContainer';
 import ScrollFormButton from '../header/ScrollFormButton';
@@ -20,9 +18,8 @@ const Header = ({
       isbuttonnclicked={isbuttonnclicked.toString()}
       initanimation={initanimation.toString()}
     >
-      <Link to={PATH_URL.MAIN}>
-        <HeaderLogo onClick={onClickLogoHandler} />
-      </Link>
+      <HeaderLogo onClick={onClickLogoHandler} />
+
       <NavFormContainer
         isscrolltop={isscrolltop.toString()}
         isbuttonnclicked={isbuttonnclicked.toString()}
@@ -65,6 +62,10 @@ const Container = styled.div`
   border-bottom: 1px solid #ebebeb;
 
   height: ${({ isbuttonnclicked }) => (isbuttonnclicked === 'true' ? '180px' : '80px')};
+
+  :first-child {
+    cursor: pointer;
+  }
 `;
 
 const slideDown = keyframes`

@@ -6,15 +6,57 @@ import { PATH_URL } from '../constants';
 
 const Login = () => {
   const url = 'http://43.200.169.48';
-  // axios.get(`${url}/api/stay`).then(res => console.log(res));
+
+  // axios
+  //   .post(`${url}/api/user/signup`, {
+  //     email: 'test123@gmail.com',
+  //     password: 'test12345',
+  //     nickname: 'test12345',
+  //   })
+  //   .then(res => console.log(res));
 
   axios
-    .post(`${url}/api/user/signup`, {
-      email: 'test123@gmail.com',
-      password: 'test12345',
-      nickname: 'test12345',
-    })
-    .then(res => console.log(res));
+    .post(
+      `${url}/api/user/signin`,
+      {
+        email: 'test123@gmail.com',
+        password: 'test12345',
+      },
+      {
+        withCredentials: true, // Include cookies in the request
+      }
+    )
+    .then(res => {
+      console.log('login res => ', res);
+
+      // const cookieValue = document.cookie.match('(^|;) ?' + 'CookieName' + '=([^;]*)(;|$)');
+      // console.log(cookieValue);
+      // const token = res.headers['set-cookie'];
+      // console.log('token => ', token);
+    });
+
+  axios.get(`${url}/api/stay`).then(res => console.log('stay res => ', res));
+
+  // axios
+  //   .post(`${url}/api/stay`, {
+  //     stayTitle: '궁전 같은 저택의 전용 스위트',
+  //     country: '일본',
+  //     city: '훗카이도',
+  //     costPerDay: 166698,
+  //     stayType: '공동 주택',
+  //     numBed: 3,
+  //     bedType: 'SINGLE',
+  //     bathType: 'SHARED',
+  //     isGuest: true,
+  //     convenienceList: ['WASHER', 'PARKINGLOT'],
+  //     imgUrlList: ['imgurl'],
+  //     tayContent: '이 숙소는',
+  //     descTag: 'CITYHEART',
+  //     checkInAfter: 13,
+  //     checkOutBefore: 11,
+  //     maxGroupNum: 3,
+  //   })
+  //   .then(res => console.log('등록', res));
 
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);

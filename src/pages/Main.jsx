@@ -1,11 +1,34 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { PATH_URL } from '../constants';
+import { getAllList } from '../apis/stayList';
+import Filter from '../components/header/filter/Filter';
+import { getFilteredList } from '../apis/stayList';
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Main = () => {
   const navigate = useNavigate();
+
+  // all list
+  const testHandler = async () => {
+    try {
+      const res = await getAllList();
+      console.log('Mainpage res => ', res);
+    } catch (error) {
+      console.log('Mainpage testHandler error => ', error);
+    }
+  };
+
+  const getStayTypeFilteredHandler = async queryString => {
+    try {
+      const res = await getFilteredList(queryString);
+      console.log('Filter res => ', res);
+    } catch (error) {
+      console.log('Filter error => ', error);
+    }
+  };
 
   const [cards, setCards] = useState([]);
 
@@ -24,12 +47,13 @@ const Main = () => {
 
   return (
     <>
+      <Filter getStayTypeFilteredHandler={getStayTypeFilteredHandler} />
       <StmainContainer>
         <StlistContainer>
           <StcardContainer>
             {cards?.map(item => (
               <Stcard key={item.stayId}>
-                <Stcardpic onClick={() => navigate(PATH_URL.DETAIL)}>
+                <Stcardpic Stcardpic onClick={() => navigate(PATH_URL.DETAIL)}>
                   <Stpic src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720" />
                   <Stcardpic1></Stcardpic1>
                   <Stcardpic2></Stcardpic2>

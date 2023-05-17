@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFormData } from '../../modules/filterForm';
 
 const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
+  // 현재 선택 영역
   const [formselect, setFormSelect] = useState(null);
   const headerRefs = useHeaderRef();
   const latestSelect = useRef(formselect);
+  // redux filter form 데이터
   const formData = useSelector(state => state.filterForm);
   const dispatch = useDispatch();
 
@@ -16,25 +18,30 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
 
   latestSelect.current = formselect;
 
+  // 선택 영역 (select: string)로 변경
   const selectHandler = select => {
     setFormSelect(select);
   };
 
+  // 필터 선택 이후 다음 필터로 active 포커스 변경
   const changeFocus = () => {
+    // if (latestSelect.current === 'place') headerRefs.placeWrapperRef.current.focus();
     if (latestSelect.current === 'checkIn') headerRefs.checkInWrapperRef.current.focus();
-    else if (latestSelect.current === 'checkOut') headerRefs.checkInWrapperRef.current.focus();
+    else if (latestSelect.current === 'checkOut') headerRefs.checkOutWrapperRef.current.focus();
     else if (latestSelect.current === 'guests') headerRefs.guestWrapperRef.current.focus();
   };
 
+  // redux action dispatch
   const changeFormData = (name, value) => {
-    const data = { name, value };
+    const data = { name, value }; // {'place/checkIn/checkOut/guests', payload}
     dispatch(setFormData(data));
   };
 
-  const dropdownHanlder = useCallback(
+  const formClickBeforeDropdownHandler = useCallback(
     ({ target }) => {
       switch (true) {
-        case headerRefs.placeWrapperRef.current.contains(target):
+        case headerRefs.placeWrapperRef.current &&
+          headerRefs.placeWrapperRef.current.contains(target):
           selectHandler('place');
           break;
         case headerRefs.checkInWrapperRef.current.contains(target):
@@ -77,11 +84,11 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', dropdownHanlder);
+    document.addEventListener('click', formClickBeforeDropdownHandler);
     return () => {
-      document.removeEventListener('click', dropdownHanlder);
+      document.removeEventListener('click', formClickBeforeDropdownHandler);
     };
-  }, [dropdownHanlder]);
+  }, [formClickBeforeDropdownHandler]);
 
   useEffect(() => {
     if (formselect) changeFocus();
@@ -97,6 +104,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
       formData={formData}
       addGuestCount={addGuestCount}
       decreaseGuestCount={decreaseGuestCount}
+      changeFormData={changeFormData}
     />
   );
 };
