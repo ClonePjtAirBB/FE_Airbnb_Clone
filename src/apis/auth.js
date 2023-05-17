@@ -7,6 +7,6 @@ export const auth = async (signinData, path) => {
     const response = await apiRequest.post(`${RESOURCE}${path}`, signinData);
     return response;
   } catch (error) {
-    throw new Error('API auth error');
+    alert(error.response.data.msg);
   }
 };
