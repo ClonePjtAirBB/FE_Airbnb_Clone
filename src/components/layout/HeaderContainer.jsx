@@ -22,10 +22,12 @@ const HeaderContainer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // 상단 버튼 클릭 시 필터 폼 표시 조건
   const onClickButtonHandler = () => {
     setIsButtonClicked(true);
   };
 
+  // 스크롤 인식
   useEffect(() => {
     if (!initanimation && window.scrollY > 40) {
       setInitAnimation(true);

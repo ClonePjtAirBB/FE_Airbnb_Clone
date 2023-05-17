@@ -4,45 +4,73 @@ import { ReactComponent as UserIcon } from '../assets/header-user-button-icon.sv
 import { useState, useRef, useEffect } from 'react';
 import Dropdown from '../global/Dropdown';
 import UserNavDropdown from './dropdown/UserNavDropdown';
+import TestDropdown from './TestDropdown';
 
-const HeaderUserNav = () => {
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+const HeaderUserNav = ({
+  isUserDropdownOpen,
+  setIsUserDropdownOpen,
+  testDropdownOpen,
+  setTestDropdownOpen,
+  isModalOpen,
+  setIsModalOpen,
+}) => {
+  // const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsUserDropdownOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = event => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setIsUserDropdownOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [dropdownRef]);
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, [dropdownRef]);
 
-  const dropdownHandler = () => {
-    setIsUserDropdownOpen(!isUserDropdownOpen);
-  };
+  // TESTCODE
+  // const [testDropdownOpen, setTestDropdownOpen] = useState(false);
 
   return (
     <>
       <Container>
         <Button>당신의 공간을 에어비앤비하세요</Button>
 
-        <UserContainer ref={dropdownRef} onClick={dropdownHandler}>
+        <UserContainer ref={dropdownRef} onClick={() => setIsUserDropdownOpen(true)}>
           <LineIcon />
           <UserIcon />
         </UserContainer>
+
+        {isUserDropdownOpen && (
+          <>
+            <UserDropdownWrapper dropdownState="user">
+              <UserNavDropdown
+                setIsUserDropdownOpen={setIsUserDropdownOpen}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              />
+            </UserDropdownWrapper>
+          </>
+        )}
+
+        {/* <button
+          onClick={() => {
+            setTestDropdownOpen(true);
+          }}
+        >
+          TEST
+        </button>
+
+        {testDropdownOpen && (
+          <TestDropdown
+            setTestDropdownOpen={setTestDropdownOpen}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        )} */}
       </Container>
-      {isUserDropdownOpen && (
-        <>
-          <UserDropdownWrapper dropdownState="user">
-            <UserNavDropdown />
-          </UserDropdownWrapper>
-        </>
-      )}
     </>
   );
 };
