@@ -1,6 +1,24 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { getDetailList } from '../apis/stayList';
+import { useParams } from 'react-router-dom';
 
 const Detail = () => {
+  const { id } = useParams();
+  const [detailcards, setdetailCards] = useState([]);
+
+  useEffect(() => {
+    async function detailList() {
+      try {
+        const res = await getDetailList(id);
+        setdetailCards(res);
+      } catch (error) {
+        console.log('Detailpage detailList error => ', error);
+      }
+    }
+    detailList();
+  }, []);
+  console.log(detailcards);
   return (
     <>
       <StDetailContainer>
