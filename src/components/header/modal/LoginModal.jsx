@@ -1,6 +1,20 @@
 import { styled } from 'styled-components';
+import useAuthInput from '../../../hooks/useAuthInput';
+import { signin } from '../../../apis/auth';
 
-const LoginModal = () => {
+const LoginModal = ({ closeModalHandler }) => {
+  const { inputData: email, inputChangeHandler: emailChangeHandler } = useAuthInput();
+  const { inputData: password, inputChangeHandler: passwordChangeHandler } = useAuthInput();
+
+  const inputDataSubmitHandler = async e => {
+    e.preventDefault();
+    try {
+      const res = await signin({ email, password });
+      alert(res.msg);
+      closeModalHandler();
+    } catch (error) {}
+  };
+
   return (
     <Container onClick={e => e.stopPropagation()}>
       <LabelWrapper>
@@ -9,9 +23,14 @@ const LoginModal = () => {
 
       <AuthWrapper>
         <H3Label>에어비앤비에 오신 것을 환영합니다.</H3Label>
-        <Form>
-          <Input placeholder="이메일" />
-          <Input placeholder="비밀번호" />
+        <Form onSubmit={inputDataSubmitHandler}>
+          <Input placeholder="이메일" type="email" value={email} onChange={emailChangeHandler} />
+          <Input
+            placeholder="비밀번호"
+            type="password"
+            value={password}
+            onChange={passwordChangeHandler}
+          />
 
           <LoginButton>로그인</LoginButton>
           <DivisionLine>또는</DivisionLine>

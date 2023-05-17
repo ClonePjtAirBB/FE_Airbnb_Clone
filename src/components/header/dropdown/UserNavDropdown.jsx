@@ -11,10 +11,6 @@ const UserNavDropdown = ({ setIsUserDropdownOpen, isModalOpen, setIsModalOpen })
     setIsUserDropdownOpen(false);
   };
 
-  const stopPropagation = e => {
-    e.stopPropagation();
-  };
-
   return (
     <>
       <StContainer>
@@ -24,7 +20,7 @@ const UserNavDropdown = ({ setIsUserDropdownOpen, isModalOpen, setIsModalOpen })
       </StContainer>
       {isModalOpen && (
         <ModalBackground onClick={closeModalHandler}>
-          <LoginModal />
+          <LoginModal closeModalHandler={closeModalHandler} />
         </ModalBackground>
       )}
     </>
