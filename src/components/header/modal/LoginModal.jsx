@@ -2,209 +2,116 @@ import { styled } from 'styled-components';
 
 const LoginModal = () => {
   return (
-    <StModal>
-      <StContainer>
-        <Stempty></Stempty>
+    <Container>
+      <LabelWrapper>
+        <Label>로그인 또는 회원 가입</Label>
+      </LabelWrapper>
 
-        <StbodyContainer>
-          <Stbodyempty></Stbodyempty>
-          <Stbodybody>
-            <StsignupHeader>
-              <StsignupHeaderName bdColor="#ffffff">로그인</StsignupHeaderName>
-            </StsignupHeader>
+      <AuthWrapper>
+        <H3Label>에어비앤비에 오신 것을 환영합니다.</H3Label>
+        <Form>
+          <Input placeholder="이메일" />
+          <Input placeholder="비밀번호" />
 
-            <StsignupBody>
-              <StsignupIdContainer>
-                <StsignupInput bdColor="#f2f2f2" placeholder="이메일"></StsignupInput>
-              </StsignupIdContainer>
-
-              <StsignupPwContainer>
-                <StsignupInput bdColor="#f2f2f2" placeholder="비밀번호"></StsignupInput>
-              </StsignupPwContainer>
-            </StsignupBody>
-
-            <StsignupBtnContainer>
-              <StsignupButton>로그인</StsignupButton>
-            </StsignupBtnContainer>
-          </Stbodybody>
-          <Stbodyempty1></Stbodyempty1>
-        </StbodyContainer>
-        <Stempty1></Stempty1>
-      </StContainer>
-      <div>
-        <ModalBtn>취소</ModalBtn>
-      </div>
-    </StModal>
+          <LoginButton>로그인</LoginButton>
+          <DivisionLine>또는</DivisionLine>
+        </Form>
+        <SigninButton>회원가입</SigninButton>
+      </AuthWrapper>
+    </Container>
   );
 };
 
 export default LoginModal;
 
-const StDetailContainer = styled.div`
-  height: auto;
-  width: auto;
-  display: flex;
-  box-sizing: border-box;
-  margin: 10px 190px 10px 190px;
-  flex-direction: row-reverse;
-  background-color: white;
-`;
-const ModalButton = styled.div`
-  border: none;
-  height: 50px;
-  border-radius: 10px;
-  width: 300px;
-  color: #000000;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-  gap: 7px;
-  &:active {
-    background-color: #c7c7c7;
-  }
-`;
-const StModal = styled.div`
-  /* top: 50%;
-  left: 50%; */
-  width: 500px;
-  height: 700px;
+const Container = styled.div`
+  width: 568px;
+  height: 500px;
   padding: 10px;
-  /* position: absolute; */
-  /* transform: translate(-50%, -50%); */
   background-color: white;
   border-radius: 12px;
 `;
-const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  inset: 0;
-  position: fixed;
-  opacity: 80%;
-  background-color: #ddd;
+
+const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ebebeb;
 `;
-const ModalBtn = styled.button`
-  top: 100px;
-  right: 15px;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  border-radius: 100%;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  :hover {
-    border: 1px solid #000000;
+
+const Label = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const AuthWrapper = styled.div`
+  padding: 0 24px;
+`;
+
+const H3Label = styled.h3`
+  width: 100%;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 30px 0;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const Input = styled.input`
+  height: 52px;
+  width: 100%;
+  border: 1px solid #b0b0b0;
+  border-radius: 10px;
+  padding: 0 10px;
+
+  ::placeholder {
+    color: #dddddd;
   }
 `;
-const StContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding-top: 50px;
-`;
-const Stempty = styled.div`
-  width: auto;
-  height: auto;
-  display: flex;
-`;
-const StbodyContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-const Stbodyempty = styled.div`
-  width: auto;
-  height: auto;
-  display: flex;
-`;
-const Stbodybody = styled.div`
-  width: 100%;
-  height: 100%;
-  /* box-shadow: rgba(0, 0, 0, 0.19) 0px 8px 15px, rgba(0, 0, 0, 0.23) 0px 5px 5px; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const StsignupHeader = styled.div`
-  width: 100%;
-  height: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const StsignupHeaderName = styled.div`
-  width: 100%;
-  height: 80%;
-  font-size: 30px;
-  border: 2px solid ${props => props.bdColor};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const StsignupBody = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 0px 60px 0px;
-`;
-const StsignupInput = styled.input`
-  width: 100%;
-  height: 100%;
-  font-size: 20px;
-  outline: none;
-  border: 2px solid ${props => props.bdColor};
-  display: flex;
-  cursor: pointer;
-`;
-const StsignupIdContainer = styled.div`
-  width: 70%;
-  height: 25%;
-  border-radius: 12px;
-  border: 1px solid ${props => props.bdColor};
-  display: flex;
-  margin: 30px 0px 30px 0px;
-  overflow: hidden;
-`;
-const StsignupPwContainer = styled.div`
-  width: 70%;
-  height: 25%;
-  border-radius: 12px;
-  border: 1px solid ${props => props.bdColor};
-  display: flex;
-  overflow: hidden;
-`;
-const StsignupBtnContainer = styled.div`
-  width: 70%;
-  height: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-`;
-const StsignupButton = styled.button`
-  width: 100%;
-  height: 100%;
-  font-size: 20px;
-  border-radius: 12px;
-  font-weight: 800;
+
+const LoginButton = styled.button`
+  height: 48px;
+  border-radius: 9px;
   color: #ffffff;
   background: #ee1372;
-  border: 2px solid ${props => props.bdColor};
   cursor: pointer;
 `;
-const Stbodyempty1 = styled.div`
-  width: 100%;
-  height: 30%;
-  display: flex;
+
+const DivisionLine = styled.div`
+  overflow: hidden;
+  text-align: center;
+  padding: 10px 0;
+
+  &::before,
+  &::after {
+    background-color: #dddddd;
+    content: '';
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+  }
+  &::before {
+    right: 0.5em;
+    margin-left: -50%;
+  }
+  &::after {
+    left: 0.5em;
+    margin-right: -50%;
+  }
 `;
-const Stempty1 = styled.div`
-  width: auto;
-  height: auto;
-  display: flex;
+
+const SigninButton = styled.button`
+  height: 48px;
+  border-radius: 9px;
+  border: 1px solid #222222;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  margin-top: 7px;
 `;
