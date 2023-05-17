@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAllList } from '../apis/stayList';
+import { getAllList, getFilteredList } from '../apis/stayList';
 
 const initialState = [
   {
@@ -20,6 +20,15 @@ export const __getList = createAsyncThunk('getList', async (payload, thunkAPI) =
     console.log('__getList response => ', response);
     return thunkAPI.fulfillWithValue(response);
     // .data.어쩌구 해야함
+  } catch (error) {
+    console.log(`__getList Thunk error: ${error}`);
+  }
+});
+
+export const __getFilteredList = createAsyncThunk('getFilteredList', async (payload, thunkAPI) => {
+  try {
+    const response = await getFilteredList(payload);
+    console.log('__getFilterdeList response => ', response);
   } catch (error) {
     console.log(`__getList Thunk error: ${error}`);
   }

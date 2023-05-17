@@ -4,6 +4,7 @@ const SET_PLACE = 'form/SET_PLACE';
 const SET_CHECKIN = 'form/SET_CHECKIN';
 const SET_CHECKOUT = 'form/SET_CHECKOUT';
 const SET_GUESTS = 'form/SET_GUESTS';
+const SET_STAY_TYPE = 'form/SET_STAY_TYPE';
 
 export const reset = () => ({ type: RESET });
 
@@ -18,6 +19,8 @@ export const setFormData = data => {
       return { type: SET_CHECKOUT, payload };
     case 'guests':
       return { type: SET_GUESTS, payload };
+    case 'stayType':
+      return { type: SET_STAY_TYPE, payload };
     default:
       break;
   }
@@ -38,6 +41,7 @@ const initialState = {
     infant: 0,
     pet: 0,
   },
+  stayType: '',
 };
 
 const filterForm = (state = initialState, action) => {
@@ -64,6 +68,11 @@ const filterForm = (state = initialState, action) => {
       return {
         ...state,
         guests: action.payload,
+      };
+    case SET_STAY_TYPE:
+      return {
+        ...state,
+        stayType: action.payload,
       };
     case GET_FORM_DATA:
       return {

@@ -2,10 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { PATH_URL } from '../constants';
 import { getAllList } from '../apis/stayList';
+import Filter from '../components/header/filter/Filter';
+import { getFilteredList } from '../apis/stayList';
 
 const Main = () => {
   const navigate = useNavigate();
 
+  // all list
   const testHandler = async () => {
     try {
       const res = await getAllList();
@@ -15,14 +18,18 @@ const Main = () => {
     }
   };
 
+  const getStayTypeFilteredHandler = async queryString => {
+    try {
+      const res = await getFilteredList(queryString);
+      console.log('Filter res => ', res);
+    } catch (error) {
+      console.log('Filter error => ', error);
+    }
+  };
+
   return (
     <>
-      <button
-        onClick={testHandler}
-        style={{ height: '100px', width: '300px', backgroundColor: 'lightgrey' }}
-      >
-        TEST
-      </button>
+      <Filter getStayTypeFilteredHandler={getStayTypeFilteredHandler} />
       <StmainContainer>
         <StlistContainer>
           <StcardContainer>

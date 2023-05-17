@@ -1,12 +1,26 @@
 import { styled } from 'styled-components';
 import FilterItem from './FilterItem';
 import { filterOptions } from '../../../shared/filterOptions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFormData } from '../../../modules/filterForm';
+import { getFilteredList } from '../../../apis/stayList';
 
-const Filter = () => {
+const Filter = ({ getStayTypeFilteredHandler }) => {
+  const formData = useSelector(state => state.filterForm);
+  const dispatch = useDispatch();
+
+  const clickFilterHandler = (value, queryString) => {
+    const data = { name: 'stayType', value };
+    dispatch(setFormData(data));
+    getStayTypeFilteredHandler(queryString);
+  };
+
+  console.log(formData);
+
   return (
     <Container>
       {filterOptions.map(option => (
-        <FilterItem key={option.id} option={option} />
+        <FilterItem key={option.id} option={option} clickFilterHandler={clickFilterHandler} />
       ))}
     </Container>
   );

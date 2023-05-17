@@ -1,8 +1,10 @@
 import { styled } from 'styled-components';
 
-const FilterItem = ({ option }) => {
+const FilterItem = ({ option, clickFilterHandler }) => {
   return (
-    <Container>
+    <Container
+      onClick={() => clickFilterHandler(option.filterValue, `stayType=${option.filterValue}`)}
+    >
       <IconWarpper>
         <Img src={option.iconUrl} />
       </IconWarpper>

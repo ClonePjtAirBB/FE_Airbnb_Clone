@@ -4,7 +4,6 @@ import { throttle } from 'lodash';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH_URL } from '../../constants';
-import Filter from '../header/filter/Filter';
 
 const HeaderContainer = () => {
   const [isscrolltop, setIsScrollTop] = useState(window.scrollY < 40);
@@ -46,7 +45,6 @@ const HeaderContainer = () => {
         onClickLogoHandler={onClickLogoHandler}
         onClickButtonHandler={onClickButtonHandler}
       />
-      <Filter />
     </>
   );
 };
