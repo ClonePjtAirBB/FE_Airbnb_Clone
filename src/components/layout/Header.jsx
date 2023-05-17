@@ -16,7 +16,6 @@ const Header = ({
   // UserNav 드롭다운, 모달
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [testDropdownOpen, setTestDropdownOpen] = useState(false);
 
   return (
     <Container
@@ -55,8 +54,6 @@ const Header = ({
           setIsUserDropdownOpen={setIsUserDropdownOpen}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          testDropdownOpen={testDropdownOpen}
-          setTestDropdownOpen={setTestDropdownOpen}
         />
       </UserNavContainer>
     </Container>

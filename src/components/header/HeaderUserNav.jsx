@@ -1,37 +1,17 @@
 import { styled } from 'styled-components';
 import { ReactComponent as LineIcon } from '../assets/header-user-button-line.svg';
 import { ReactComponent as UserIcon } from '../assets/header-user-button-icon.svg';
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import Dropdown from '../global/Dropdown';
 import UserNavDropdown from './dropdown/UserNavDropdown';
-import TestDropdown from './TestDropdown';
 
 const HeaderUserNav = ({
   isUserDropdownOpen,
   setIsUserDropdownOpen,
-  testDropdownOpen,
-  setTestDropdownOpen,
   isModalOpen,
   setIsModalOpen,
 }) => {
-  // const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  // useEffect(() => {
-  //   const handleClickOutside = event => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setIsUserDropdownOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [dropdownRef]);
-
-  // TESTCODE
-  // const [testDropdownOpen, setTestDropdownOpen] = useState(false);
 
   return (
     <>
@@ -54,22 +34,6 @@ const HeaderUserNav = ({
             </UserDropdownWrapper>
           </>
         )}
-
-        {/* <button
-          onClick={() => {
-            setTestDropdownOpen(true);
-          }}
-        >
-          TEST
-        </button>
-
-        {testDropdownOpen && (
-          <TestDropdown
-            setTestDropdownOpen={setTestDropdownOpen}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-          />
-        )} */}
       </Container>
     </>
   );
