@@ -48,14 +48,8 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
         case headerRefs.guestWrapperRef.current.contains(target):
           selectHandler('guests');
           break;
-        case formselect === 'checkOut' && latestSelect.current === 'guests':
-          selectHandler('guests');
-          break;
-        case latestSelect.current &&
-          !headerRefs.formRef.current.contains(target) &&
-          !headerRefs.calendarDropdownRef.current.contains(target):
+        case latestSelect.current && !headerRefs.formRef.current.contains(target):
           selectHandler(null);
-          break;
         default:
           break;
       }
