@@ -1,35 +1,60 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { PATH_URL } from '../constants';
-import { getAllList } from '../apis/stayList';
+// import { getAllList } from '../apis/stayList';
 import Filter from '../components/header/filter/Filter';
 import { getFilteredList } from '../apis/stayList';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getFilteredList, __getList } from '../modules/staylistSlice';
+import { getAllList } from '../apis/stayList';
 
 const Main = () => {
   const navigate = useNavigate();
-  const [cards, setCards] = useState([]);
+  const dispatch = useDispatch();
+  let list = useSelector(state => {
+    return state.staylistSlice.filteredData.length !== 0
+      ? state.staylistSlice.filteredData
+      : state.staylistSlice.list;
+  });
+
+  let filteredData = [];
+  filteredData = useSelector(state => state.staylistSlice.filteredData);
+
+  // 필터링 데이터
+  useEffect(() => {
+    dispatch(__getFilteredList());
+    if (filteredData.length !== 0) {
+      list = filteredData;
+    }
+  }, [dispatch]);
+
+  // thunk 전체 데이터 호출
+  useEffect(() => {
+    dispatch(__getList());
+  }, []);
+
+  // useEffect(() => {
+  //   async function fetchAllData() {
+  //     try {
+  //       const serverData = await getAllList();
+  //       setCards(serverData);
+  //       console.log(cards);
+  //     } catch (error) {
+  //       console.log('Mainpage mainList error => ', error);
+  //     }
+  //   }
+  //   fetchAllData();
+  // }, []);
 
   const getStayTypeFilteredHandler = async queryString => {
     try {
       const res = await getFilteredList(queryString);
-      setCards(res);
+      // setCards(res);
     } catch (error) {
       console.log('Mainpage getStayTypeFilteredHandler error => ', error);
     }
   };
-
-  useEffect(() => {
-    async function mainList() {
-      try {
-        const res = await getAllList();
-        setCards(res);
-      } catch (error) {
-        console.log('Mainpage mainList error => ', error);
-      }
-    }
-    mainList();
-  }, []);
 
   return (
     <>
@@ -37,10 +62,10 @@ const Main = () => {
       <StmainContainer>
         <StlistContainer>
           <StcardContainer>
-            {cards?.map(item => (
+            {list?.map(item => (
               <Stcard key={item.stayId}>
                 <Stcardpic Stcardpic onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
-                  <Stpic src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720" />
+                  <Stpic src={item.img} />
                   <Stcardpic1></Stcardpic1>
                   <Stcardpic2></Stcardpic2>
                 </Stcardpic>
@@ -59,7 +84,7 @@ const Main = () => {
                       <Stcardimpodays>6월 20일~30일</Stcardimpodays>
                     </div>
                     <Stcardimpocosday>
-                      <Stcardimpocos>₩{item.costPerDay}</Stcardimpocos>
+                      <Stcardimpocos>{item.costPerDay}</Stcardimpocos>
                       <div>&nbsp;/박</div>
                     </Stcardimpocosday>
                   </Stcardimpo>

@@ -12,13 +12,12 @@ const initialState = {
 export const __getList = createAsyncThunk('getList', async (payload, thunkAPI) => {
   try {
     const response = await getAllList();
-    console.log('__getList payload => ', payload);
-    console.log('__getList response => ', response);
-    // return thunkAPI.fulfillWithValue(response);
-    return response.data;
-    // .data.어쩌구 해야함
+    // console.log('__getList payload => ', payload);
+    // console.log('__getList response => ', response);
+    return thunkAPI.fulfillWithValue(response);
+    // return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    console.log(error);
   }
 });
 
@@ -26,8 +25,8 @@ export const __getFilteredList = createAsyncThunk('getFilteredList', async (payl
   try {
     const response = await getFilteredList(payload);
     console.log('__getFilterdeList response => ', response);
-    // return thunkAPI.fulfillWithValue(response.data);
-    return response.data;
+    // return thunkAPI.fulfillWithValue(response);
+    return response;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -48,6 +47,8 @@ export const stayListSlice = createSlice({
       state.isError = false;
       console.log('stayListSlice state =>', state);
       state.list = action.payload;
+      // return action.payload;
+      // return state.list;
     },
     [__getList.rejected]: (state, action) => {
       state.isLoading = false;
@@ -64,6 +65,8 @@ export const stayListSlice = createSlice({
       state.isError = false;
       console.log('stayListSlice filterd state =>', state);
       state.filteredData = action.payload;
+      // return action.payload;
+      // return state.filteredData;
     },
     [__getFilteredList.rejected]: (state, action) => {
       state.isLoading = false;
