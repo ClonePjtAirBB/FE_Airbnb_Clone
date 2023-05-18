@@ -12,27 +12,36 @@ import { getAllList } from '../apis/stayList';
 const Main = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let list = useSelector(state => {
-    return state.staylistSlice.filteredData.length !== 0
-      ? state.staylistSlice.filteredData
-      : state.staylistSlice.list;
-  });
 
-  let filteredData = [];
-  filteredData = useSelector(state => state.staylistSlice.filteredData);
+  const list = useSelector(state => state.staylistSlice.list);
+  // const [list, setList] = useState(allData);
+
+  const filterdData = useSelector(state => state.staylistSlice.filteredData);
+
+  console.log(filterdData);
+
+  // if (filterdData.length !== 0) setList(filterdData);
+
+  // let list = useSelector(state => {
+  //   return state.staylistSlice.filteredData.length !== 0
+  //     ? state.staylistSlice.filteredData
+  //     : state.staylistSlice.list;
+  // });
 
   // 필터링 데이터
-  useEffect(() => {
-    dispatch(__getFilteredList());
-    if (filteredData.length !== 0) {
-      list = filteredData;
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__getFilteredList());
+  //   if (filteredData.length !== 0) {
+  //     list = filteredData;
+  //   }
+  // }, [dispatch]);
 
   // thunk 전체 데이터 호출
   useEffect(() => {
     dispatch(__getList());
   }, []);
+
+  // console.log(list);
 
   // useEffect(() => {
   //   async function fetchAllData() {
@@ -52,7 +61,7 @@ const Main = () => {
       const res = await getFilteredList(queryString);
       // setCards(res);
     } catch (error) {
-      console.log('Mainpage getStayTypeFilteredHandler error => ', error);
+      console.log(' ', error);
     }
   };
 
@@ -62,35 +71,77 @@ const Main = () => {
       <StmainContainer>
         <StlistContainer>
           <StcardContainer>
-            {list?.map(item => (
-              <Stcard key={item.stayId}>
-                <Stcardpic onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
-                  <Stpic src={item.img} />
-                  <Stcardpic1></Stcardpic1>
-                  <Stcardpic2></Stcardpic2>
-                </Stcardpic>
-                <StcardimpoContainer>
-                  <Stcardimpo onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
-                    <div>
-                      <Stcardimpocountystar>
-                        <Stcardimpocounty>
-                          {item.country}, {item.city}
-                        </Stcardimpocounty>
-                        <Stcardimpostar>★ 4.95</Stcardimpostar>
-                      </Stcardimpocountystar>
-                      <Stcardimponame>
-                        {item.hostNickname} 님이 호스팅하는 {item.stayType}
-                      </Stcardimponame>
-                      <Stcardimpodays>6월 20일~30일</Stcardimpodays>
-                    </div>
-                    <Stcardimpocosday>
-                      <Stcardimpocos>₩{item.costPerDay.toLocaleString('ko-KR')}</Stcardimpocos>
-                      <div>&nbsp;/박</div>
-                    </Stcardimpocosday>
-                  </Stcardimpo>
-                </StcardimpoContainer>
-              </Stcard>
-            ))}
+            {filterdData.length !== 0 ? (
+              <>
+                {filterdData?.map(item => (
+                  <Stcard key={item.stayId}>
+                    <Stcardpic
+                      Stcardpic
+                      onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}
+                    >
+                      <Stpic src={item.img} />
+                      <Stcardpic1></Stcardpic1>
+                      <Stcardpic2></Stcardpic2>
+                    </Stcardpic>
+                    <StcardimpoContainer>
+                      <Stcardimpo onClick={() => navigate(PATH_URL.DETAIL)}>
+                        <div>
+                          <Stcardimpocountystar>
+                            <Stcardimpocounty>
+                              {item.country}, {item.city}
+                            </Stcardimpocounty>
+                            <Stcardimpostar>★ 4.95</Stcardimpostar>
+                          </Stcardimpocountystar>
+                          <Stcardimponame>
+                            {item.hostNickname} 님이 호스팅하는 {item.stayType}
+                          </Stcardimponame>
+                          <Stcardimpodays>6월 20일~30일</Stcardimpodays>
+                        </div>
+                        <Stcardimpocosday>
+                          <Stcardimpocos>₩{item.costPerDay.toLocaleString('ko-KR')}</Stcardimpocos>
+                          <div>&nbsp;/박</div>
+                        </Stcardimpocosday>
+                      </Stcardimpo>
+                    </StcardimpoContainer>
+                  </Stcard>
+                ))}
+              </>
+            ) : (
+              <>
+                {list?.map(item => (
+                  <Stcard key={item.stayId}>
+                    <Stcardpic
+                      Stcardpic
+                      onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}
+                    >
+                      <Stpic src={item.img} />
+                      <Stcardpic1></Stcardpic1>
+                      <Stcardpic2></Stcardpic2>
+                    </Stcardpic>
+                    <StcardimpoContainer>
+                      <Stcardimpo onClick={() => navigate(PATH_URL.DETAIL)}>
+                        <div>
+                          <Stcardimpocountystar>
+                            <Stcardimpocounty>
+                              {item.country}, {item.city}
+                            </Stcardimpocounty>
+                            <Stcardimpostar>★ 4.95</Stcardimpostar>
+                          </Stcardimpocountystar>
+                          <Stcardimponame>
+                            {item.hostNickname} 님이 호스팅하는 {item.stayType}
+                          </Stcardimponame>
+                          <Stcardimpodays>6월 20일~30일</Stcardimpodays>
+                        </div>
+                        <Stcardimpocosday>
+                          <Stcardimpocos>₩{item.costPerDay.toLocaleString('ko-KR')}</Stcardimpocos>
+                          <div>&nbsp;/박</div>
+                        </Stcardimpocosday>
+                      </Stcardimpo>
+                    </StcardimpoContainer>
+                  </Stcard>
+                ))}
+              </>
+            )}
           </StcardContainer>
         </StlistContainer>
       </StmainContainer>
