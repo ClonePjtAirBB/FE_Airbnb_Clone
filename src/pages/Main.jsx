@@ -84,7 +84,7 @@ const Main = () => {
                       <Stcardimpodays>6월 20일~30일</Stcardimpodays>
                     </div>
                     <Stcardimpocosday>
-                      <Stcardimpocos>₩{item.costPerDay}</Stcardimpocos>
+                      <Stcardimpocos>₩{item.costPerDay.toLocaleString('ko-KR')}</Stcardimpocos>
                       <div>&nbsp;/박</div>
                     </Stcardimpocosday>
                   </Stcardimpo>
