@@ -18,6 +18,11 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    transition: 0.5s;
+    background-color: #fc0a37;
+  }
 `;
 
 export default SearchIcon;

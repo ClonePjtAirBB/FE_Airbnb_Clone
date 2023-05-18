@@ -43,8 +43,7 @@ const HeaderForm = ({
     if (stayType.length !== 0) requestUrl += `stayType=${stayType}`;
 
     dispatch(__getFilteredList(requestUrl));
-    // 서버 요청, 리스트값 redux로 변경
-    window.scrollTo({ top: 0 });
+    guestDropdownRef.current.style.display = 'none';
   };
 
   return (
@@ -75,7 +74,7 @@ const HeaderForm = ({
         ref={checkInWrapperRef}
         name="checkIn"
         formselect={formselect}
-        width="20%"
+        width="25%"
         tabIndex="2"
       >
         <TextWrapper>
@@ -94,7 +93,7 @@ const HeaderForm = ({
         ref={checkOutWrapperRef}
         name="checkOut"
         formselect={formselect}
-        width="20%"
+        width="25%"
         tabIndex="3"
       >
         <TextWrapper>
@@ -103,7 +102,7 @@ const HeaderForm = ({
         </TextWrapper>
       </Wrapper>
 
-      <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="30%" tabIndex="4">
+      <Wrapper ref={guestWrapperRef} name="guests" formselect={formselect} width="35%" tabIndex="4">
         <TextWrapper>
           <TextLabel>여행자</TextLabel>
           <TextDesc value={guestCount}>
