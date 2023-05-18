@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import Count from './Count';
 
-function Select({ maxGroupNum }) {
+function Select({ maxGroupNum, onSumChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [sum, setSum] = useState(0);
@@ -17,6 +17,7 @@ function Select({ maxGroupNum }) {
 
   const handleSumChange = newSum => {
     setSum(newSum);
+    onSumChange(newSum);
   };
 
   return (
@@ -27,7 +28,12 @@ function Select({ maxGroupNum }) {
       {isOpen && (
         <SelectOptions className="dropdown-menu">
           <Option onClick={() => selectOption()}>
-            <Count onSumChange={handleSumChange} maxGroupNum={maxGroupNum} setIsOpen={setIsOpen} />
+            <Count
+              onSumChange={handleSumChange}
+              maxGroupNum={maxGroupNum}
+              setIsOpen={setIsOpen}
+              setSum={setSum}
+            />
           </Option>
         </SelectOptions>
       )}

@@ -64,13 +64,13 @@ const Main = () => {
           <StcardContainer>
             {list?.map(item => (
               <Stcard key={item.stayId}>
-                <Stcardpic Stcardpic onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
+                <Stcardpic onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
                   <Stpic src={item.img} />
                   <Stcardpic1></Stcardpic1>
                   <Stcardpic2></Stcardpic2>
                 </Stcardpic>
                 <StcardimpoContainer>
-                  <Stcardimpo onClick={() => navigate(PATH_URL.DETAIL)}>
+                  <Stcardimpo onClick={() => navigate(`${PATH_URL.DETAIL}/${item.stayId}`)}>
                     <div>
                       <Stcardimpocountystar>
                         <Stcardimpocounty>

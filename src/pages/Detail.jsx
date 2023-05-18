@@ -1,11 +1,32 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { getDetailList } from '../apis/stayList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import Select from '../detail/Select';
+import { PATH_URL } from '../constants';
+import { getDateList, postStaydata } from '../apis/staybookList';
 
 const Detail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [detailcards, setdetailCards] = useState([]);
+  const [sum, setSum] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [date, setDate] = useState([]);
+
+  const reshandler = async () => {
+    try {
+      const response = await postStaydata(id, sum, startDate, endDate);
+      alert('예약이 완료되었습니다!');
+      navigate(PATH_URL.MAIN);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.msg) {
+        alert(error.response.data.msg);
+      } else {
+        alert('예약에 실패하였습니다. 다시 시도해 주세요.');
+      }
+    }
+  };
 
   useEffect(() => {
     async function detailList() {
@@ -18,35 +39,92 @@ const Detail = () => {
     }
     detailList();
   }, []);
-  console.log(detailcards);
+
+  useEffect(() => {
+    async function dateList() {
+      try {
+        const res = await getDateList(id);
+        setDate(res);
+      } catch (error) {
+        console.log('Detailpage dateList error => ', error);
+      }
+    }
+    dateList();
+  }, []);
+
+  const handleSumChange = newSum => {
+    setSum(newSum);
+  };
+
+  const showModal = () => {
+    setModal(!modal);
+  };
+
+  let today = new Date();
+  let startDate = '';
+  let endDate = '';
+
+  let year = today.getFullYear();
+  let month = ('0' + (today.getMonth() + 1)).slice(-2);
+  let day = ('0' + today.getDate()).slice(-2);
+
+  let dateString = year + '-' + month + '-' + day;
+
+  const startDateArray = date.map(item => item.startDate);
+
+  // 2. 겹치지 않는 날짜 필터링
+  const nonOverlappingDates = startDateArray
+    .filter(item => item !== dateString)
+    .map(dateString => new Date(dateString).getTime());
+
+  // 3. 가장 작은 날짜 선택
+  const minDate =
+    nonOverlappingDates.length > 0
+      ? new Date(Math.min(...nonOverlappingDates)).toISOString().split('T')[0]
+      : dateString;
+
+  startDate = minDate;
+
+  let laterday = ('0' + (new Date(minDate).getDate() + 5)).slice(-2);
+  let laterdateString = year + '-' + month + '-' + laterday;
+  endDate = laterdateString;
+  // console.log('겹치지 않는 가장 작은 날짜:', minDate);
+  // console.log(startDate);
+  // console.log(endDate);
+  // console.log(dateString);
+  // console.log(laterdateString);
+  // console.log(detailcards);
+  // console.log(date);
   return (
     <>
       <StDetailContainer>
         <StDetailnameimgContainer>
           <StDetailnameContainer>
-            <StDetailname>The Granary, 소박한 현대 헛간 전환</StDetailname>
-            <StDetailetc>★ 4.95 . Lindfield, 잉글랜드, 영국</StDetailetc>
+            <StDetailname>{detailcards.stayTitle}</StDetailname>
+            <StDetailetc>
+              ★ 4.95 . {detailcards.city}, {detailcards.country}
+            </StDetailetc>
           </StDetailnameContainer>
 
           <StDetailimgContainer>
             <StDetailLimg>
-              <StLimg src="https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200" />
+              <StLimg src={detailcards.imgUrlList?.[0]} />
             </StDetailLimg>
             <StDetailMimgContainer>
               <StDetailMimgMContainer>
                 <StDetailMimg>
-                  <StMimg src="https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e80ace7e-c494-49b9-9595-08ab76ef4365.jpeg?im_w=720" />
+                  <StMimg src={detailcards.imgUrlList?.[1]} />
                 </StDetailMimg>
                 <StDetailMimg>
-                  <StMimg src="https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/55b0263c-756d-466b-b050-39b031398a1d.jpeg?im_w=720" />
+                  <StMimg src={detailcards.imgUrlList?.[2]} />
                 </StDetailMimg>
               </StDetailMimgMContainer>
               <StDetailMimgMContainer1>
                 <StDetailMimg>
-                  <StMimg src="https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/b779ec9c-080a-4788-9391-512f7d247aa0.jpeg?im_w=720" />
+                  <StMimg src={detailcards.imgUrlList?.[3]} />
                 </StDetailMimg>
                 <StDetailMimg>
-                  <StMimg src="https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/60b99416-8264-4a29-b486-cd6721117423.jpeg?im_w=720" />
+                  <StMimg src={detailcards.imgUrlList?.[4]} />
                 </StDetailMimg>
               </StDetailMimgMContainer1>
             </StDetailMimgContainer>
@@ -56,14 +134,20 @@ const Detail = () => {
         <StDetailimpobarContainer>
           <StDetailimpoContainer>
             <StDetailnametagContainer>
-              <StDetailimponame>Michelle & Michael 님이 호스팅하는 헛간의 방</StDetailimponame>
+              <StDetailimponame>
+                {detailcards.hostNickname} 님이 호스팅하는 {detailcards.stayType}
+              </StDetailimponame>
               <StDetailimpotagContainer>
-                <StDetailimpotag1>더블 침대 1개</StDetailimpotag1>
+                <StDetailimpotag1>
+                  {detailcards.bedType} {detailcards.numBed}개
+                </StDetailimpotag1>
                 <StDetailimpotag2>
                   침실에 딸린 전용 <br /> 욕실
                 </StDetailimpotag2>
                 <StDetailimpotag3>
-                  호스트가 가족과 함께 <br /> 거주하고 있습니다
+                  {detailcards.isGuest
+                    ? '호스트가 \n 거주하고 있습니다.'
+                    : '다른 게스트가 \n 숙소에 있을 수 있습니다.'}
                 </StDetailimpotag3>
               </StDetailimpotagContainer>
             </StDetailnametagContainer>
@@ -72,29 +156,21 @@ const Detail = () => {
 
             <StDetailtagnaexContainer>
               <StDetailtagnameexplain>
-                <StDetailtagname>헛간의 방</StDetailtagname>
-                <StDetailtagexplain>
-                  단독으로 사용하는 방이 있고, 공용 공간도 있는 형태입니다.
-                </StDetailtagexplain>
+                <StDetailtagname>{detailcards.stayType}</StDetailtagname>
+                <StDetailtagexplain>{detailcards.descTag}</StDetailtagexplain>
               </StDetailtagnameexplain>
               <StDetailtagnameexplain>
-                <StDetailtagname>초고속 와이파이</StDetailtagname>
-                <StDetailtagexplain>
-                  속도가 155Mbps이므로, 일행 전체가 영상 통화나 동영상 스트리밍을 즐길 수 있습니다.
-                </StDetailtagexplain>
+                <StDetailtagname>{detailcards.stayType}</StDetailtagname>
+                <StDetailtagexplain>{detailcards.descTag}</StDetailtagexplain>
               </StDetailtagnameexplain>
-              <StDetailtagname1>6월 20일 전까지 무료로 취소하실 수 있습니다.</StDetailtagname1>
+              <StDetailtagname1>{detailcards.stayType}</StDetailtagname1>
             </StDetailtagnaexContainer>
 
             <Stline></Stline>
 
             <StDetailSynameimpo>
               <StDetailSyname>숙소 정보</StDetailSyname>
-              <StDetailSyimpo>
-                숙소는 1600년경 2등급에 등재된 건물입니다. 개성이 넘치고 정원이 아름답습니다. 최근에
-                새롭게 단장한 공간과 매력적인 인테리어가 돋보이는 이 객실은 시골에서 휴식을 취하고
-                긴장을 풀 수 있는 완벽한 휴양지입니다.
-              </StDetailSyimpo>
+              <StDetailSyimpo>{detailcards.stayContent}</StDetailSyimpo>
             </StDetailSynameimpo>
 
             <Stline></Stline>
@@ -103,21 +179,16 @@ const Detail = () => {
               <StDetailtagna>숙소 편의시설</StDetailtagna>
               <StDetailtaglist>
                 <StDetailtaglistnameContainer>
-                  <StDetailtaglistname>침실문 잠금장치</StDetailtaglistname>
-                  <StDetailtaglistname>건물 내 무료 주차</StDetailtaglistname>
-                  <StDetailtaglistname>전기차 충전시설</StDetailtaglistname>
-                  <StDetailtaglistname>건조기</StDetailtaglistname>
-                  <StDetailtaglistname>전용 뒷마당 - 울타리 완비</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[0]}</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[1]}</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[2]}</StDetailtaglistname>
                 </StDetailtaglistnameContainer>
                 <StDetailtaglistnameContainer>
-                  <StDetailtaglistname>초고속 와이파이 - 155Mbps</StDetailtaglistname>
-                  <StDetailtaglistname>22인치 TV + 크롬캐스트</StDetailtaglistname>
-                  <StDetailtaglistname>세탁기 - 건물 내</StDetailtaglistname>
-                  <StDetailtaglistname>전용 파티오 또는 발코니</StDetailtaglistname>
-                  <StDetailtaglistname>숙소 내 보안 카메라</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[3]}</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[4]}</StDetailtaglistname>
+                  <StDetailtaglistname>{detailcards.convenienceList?.[5]}</StDetailtaglistname>
                 </StDetailtaglistnameContainer>
               </StDetailtaglist>
-              <button>편의시설 46개 모두 보기</button>
             </StDetailtagContainer>
           </StDetailimpoContainer>
 
@@ -126,41 +197,89 @@ const Detail = () => {
               <StDetailbarDataContainer>
                 <StDetailbarcostar>
                   <StDetailbarcost>
-                    <StDetailbarcost1>₩167,155</StDetailbarcost1>
+                    <StDetailbarcost1>₩{detailcards.costPerDay}</StDetailbarcost1>
                     <StDetailbarcost2>&nbsp;/박</StDetailbarcost2>
                   </StDetailbarcost>
                   <StDetailbarstar>★ 4.95</StDetailbarstar>
                 </StDetailbarcostar>
                 <StDetailbarDataimpoContainer>
                   <StDetailbarDatacheck>
-                    <StDetailbarDatacheckin>체크인</StDetailbarDatacheckin>
-                    <StDetailbarDatacheckout>체크아웃</StDetailbarDatacheckout>
+                    <StDetailbarDatacheckin>{startDate}</StDetailbarDatacheckin>
+                    <StDetailbarDatacheckout>{endDate}</StDetailbarDatacheckout>
                   </StDetailbarDatacheck>
-                  <StDetailbarDataperson>인원</StDetailbarDataperson>
+                  <StDetailbarDataperson>
+                    <Select onSumChange={handleSumChange} maxGroupNum={detailcards.maxGroupNum} />
+                  </StDetailbarDataperson>
                 </StDetailbarDataimpoContainer>
-                <StDetailbarreservat>예약하기</StDetailbarreservat>
+
+                <StDetailbarreservat onClick={showModal}>예약하기</StDetailbarreservat>
+                {modal && (
+                  <div>
+                    <Background onClick={showModal} />
+                    <StModal>
+                      <StContainer>
+                        <Stempty></Stempty>
+
+                        <StbodyContainer>
+                          <Stbodyempty></Stbodyempty>
+                          <Stbodybody>
+                            <StsignupHeader>
+                              <StsignupHeaderName bdColor="#ffffff">예약하기</StsignupHeaderName>
+                            </StsignupHeader>
+
+                            <StsignupHeaderimpo>다음과 같이 예약하시겠습니까?</StsignupHeaderimpo>
+
+                            <StsignupBody>
+                              <StsignupNicknameContainer>
+                                <Stsignupdiv bdColor="#f2f2f2">{startDate}</Stsignupdiv>
+                              </StsignupNicknameContainer>
+
+                              <StsignupIdContainer>
+                                <Stsignupdiv bdColor="#f2f2f2">{endDate}</Stsignupdiv>
+                              </StsignupIdContainer>
+
+                              <StsignupPwContainer>
+                                <Stsignupdiv bdColor="#f2f2f2">{sum}</Stsignupdiv>
+                              </StsignupPwContainer>
+                            </StsignupBody>
+
+                            <StsignupBtnContainer>
+                              <StsignupButton onClick={reshandler}>예약</StsignupButton>
+                            </StsignupBtnContainer>
+                          </Stbodybody>
+                          <Stbodyempty1></Stbodyempty1>
+                        </StbodyContainer>
+                        <Stempty1></Stempty1>
+                      </StContainer>
+                      <div>
+                        <ModalBtn onClick={showModal}>취소</ModalBtn>
+                      </div>
+                    </StModal>
+                  </div>
+                )}
+
                 <StDetailbarment>예약 확정 전에는 요금이 청구되지 않습니다.</StDetailbarment>
               </StDetailbarDataContainer>
 
               <StDetailbarcostContainer>
                 <StDetailbarcostday>
-                  <StDetailbarday>₩167,155 x 1박</StDetailbarday>
-                  <StDetailbardcost>₩167,155</StDetailbardcost>
+                  <StDetailbarday>₩{detailcards.costPerDay} x 1박</StDetailbarday>
+                  <StDetailbardcost>₩{detailcards.costPerDay * 1}</StDetailbardcost>
                 </StDetailbarcostday>
                 <StDetailbarcleancost>
                   <StDetailbarclean>청소비</StDetailbarclean>
-                  <StDetailbarclcost>₩25,073</StDetailbarclcost>
+                  <StDetailbarclcost>₩25073</StDetailbarclcost>
                 </StDetailbarcleancost>
                 <StDetailbarservice>
                   <StDetailbarservicename>에어비앤비 서비스 수수료</StDetailbarservicename>
-                  <StDetailbarservicecost>₩27,146</StDetailbarservicecost>
+                  <StDetailbarservicecost>₩27146</StDetailbarservicecost>
                 </StDetailbarservice>
 
                 <Stline></Stline>
 
                 <StDetailbarallcostContainer>
                   <StDetailbarallcostna>총 합계</StDetailbarallcostna>
-                  <StDetailbarallcost>₩219,374</StDetailbarallcost>
+                  <StDetailbarallcost>₩{detailcards.costPerDay + 25073 + 27146}</StDetailbarallcost>
                 </StDetailbarallcostContainer>
               </StDetailbarcostContainer>
             </StDetailbarContainer1>
@@ -275,12 +394,13 @@ const StDetailimpobarContainer = styled.div`
   /* border: 2px solid #ffffff; */
   display: flex;
   box-sizing: border-box;
+  justify-content: space-between;
   flex-direction: row;
 `;
 const StDetailimpoContainer = styled.div`
   height: auto;
-  width: auto;
-  /* border: 2px solid #ffffff; */
+  width: 600px;
+  /* border: 2px solid #4436df; */
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
@@ -321,7 +441,7 @@ const StDetailimpotag1 = styled.div`
   display: flex;
   box-sizing: border-box;
   border-radius: 8px;
-  padding: 25px 85px 25px 20px;
+  padding: 20px 30px 25px 30px;
 `;
 const StDetailimpotag2 = styled.div`
   height: auto;
@@ -331,7 +451,7 @@ const StDetailimpotag2 = styled.div`
   display: flex;
   box-sizing: border-box;
   border-radius: 8px;
-  padding: 17.5px 65px 17.5px 20px;
+  padding: 17.5px 30px 17.5px 30px;
 `;
 const StDetailimpotag3 = styled.div`
   height: auto;
@@ -340,8 +460,9 @@ const StDetailimpotag3 = styled.div`
   border: 1px solid #c8c8c8;
   display: flex;
   box-sizing: border-box;
+  white-space: pre-line;
   border-radius: 8px;
-  padding: 17.5px 65px 17.5px 20px;
+  padding: 17.5px 30px 17.5px 30px;
 `;
 const StDetailtagnaexContainer = styled.div`
   height: auto;
@@ -456,10 +577,11 @@ const StDetailtaglistname = styled.div`
   /* border: 2px solid #ffffff; */
   display: flex;
   box-sizing: border-box;
+  padding-right: 70px;
 `;
 const StDetailbarContainer = styled.div`
   height: auto;
-  width: 800px;
+  width: 500px;
   /* border: 2px solid #ffb6b6; */
   display: flex;
   box-sizing: border-box;
@@ -553,6 +675,8 @@ const StDetailbarDatacheckin = styled.div`
   border-right: 1px solid #c8c8c8;
   display: flex;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 `;
 const StDetailbarDatacheckout = styled.div`
   height: 56px;
@@ -560,6 +684,8 @@ const StDetailbarDatacheckout = styled.div`
   /* border: 2px solid #ffb6b6; */
   display: flex;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 `;
 const StDetailbarDataperson = styled.div`
   height: 56px;
@@ -700,4 +826,190 @@ const Stline = styled.div`
   border: 1px solid #e8e8e8;
   display: flex;
   box-sizing: border-box;
+`;
+// const ModalButton = styled.div`
+//   border: none;
+//   height: 50px;
+//   border-radius: 10px;
+//   width: 300px;
+//   color: #000000;
+//   font-weight: 600;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin-left: 10px;
+//   gap: 7px;
+//   &:active {
+//     background-color: #c7c7c7;
+//   }
+// `;
+const StModal = styled.div`
+  top: 130%;
+  left: 50%;
+  width: 500px;
+  height: 700px;
+  padding: 10px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 12px;
+`;
+const Background = styled.div`
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  position: fixed;
+  opacity: 80%;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+const ModalBtn = styled.button`
+  top: 100px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  border-radius: 100%;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  :hover {
+    border: 1px solid #000000;
+  }
+`;
+const StContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding-top: 50px;
+`;
+const Stempty = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+`;
+const StbodyContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+const Stbodyempty = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+`;
+const Stbodybody = styled.div`
+  width: 100%;
+  height: 100%;
+  /* box-shadow: rgba(0, 0, 0, 0.19) 0px 8px 15px, rgba(0, 0, 0, 0.23) 0px 5px 5px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const StsignupHeader = styled.div`
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const StsignupHeaderName = styled.div`
+  width: 100%;
+  height: 80%;
+  font-size: 30px;
+  border: 2px solid ${props => props.bdColor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const StsignupHeaderimpo = styled.div`
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  padding: 15px 0px 50px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const StsignupBody = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 60px 0px;
+`;
+const StsignupNicknameContainer = styled.div`
+  width: 70%;
+  height: 25%;
+  border-radius: 12px;
+  border: 1px solid ${props => props.bdColor};
+  display: flex;
+  overflow: hidden;
+`;
+const Stsignupdiv = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  outline: none;
+  border: 2px solid ${props => props.bdColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+const StsignupIdContainer = styled.div`
+  width: 70%;
+  height: 25%;
+  border-radius: 12px;
+  border: 1px solid ${props => props.bdColor};
+  display: flex;
+  margin: 30px 0px 30px 0px;
+  overflow: hidden;
+`;
+const StsignupPwContainer = styled.div`
+  width: 70%;
+  height: 25%;
+  border-radius: 12px;
+  border: 1px solid ${props => props.bdColor};
+  display: flex;
+  overflow: hidden;
+`;
+const StsignupBtnContainer = styled.div`
+  width: 70%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`;
+const StsignupButton = styled.button`
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #ee1372;
+  border: 2px solid ${props => props.bdColor};
+  cursor: pointer;
+`;
+const Stbodyempty1 = styled.div`
+  width: 100%;
+  height: 30%;
+  display: flex;
+`;
+const Stempty1 = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
 `;

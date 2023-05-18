@@ -5,7 +5,7 @@ function Count({ onSumChange, maxGroupNum, setIsOpen }) {
   const [counta, setCounta] = useState(0);
   const [countb, setCountb] = useState(0);
   const [countc, setCountc] = useState(0);
-  const maxCount = maxGroupNum; // 최대값 설정
+  const maxCount = maxGroupNum;
 
   const addhandlera = () => {
     if (counta + countb + countc < maxCount) {
