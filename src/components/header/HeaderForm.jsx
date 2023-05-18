@@ -14,7 +14,6 @@ const HeaderForm = ({
   formData,
   addGuestCount,
   decreaseGuestCount,
-  changeFormData,
 }) => {
   // redux 데이터
   const { place, checkIn, checkOut, guests } = formData;
@@ -88,7 +87,6 @@ const HeaderForm = ({
         ref={placeDropdownRef}
         formselect={formselect}
         formData={formData}
-        changeFormData={changeFormData}
         selectHandler={selectHandler}
       />
 
@@ -108,7 +106,6 @@ const HeaderForm = ({
         ref={calendarDropdownRef}
         formselect={formselect}
         formData={formData}
-        changeFormData={changeFormData}
         selectHandler={selectHandler}
       />
 

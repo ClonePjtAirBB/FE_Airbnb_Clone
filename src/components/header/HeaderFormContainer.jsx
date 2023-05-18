@@ -3,7 +3,7 @@ import useHeaderRef from '../../hooks/useHeaderRef';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFormData } from '../../modules/filterForm';
+import { setGuests } from '../../modules/filterFormSlice';
 
 const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   // 현재 선택 영역
@@ -11,7 +11,8 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
   const headerRefs = useHeaderRef();
   const latestSelect = useRef(formselect);
   // redux filter form 데이터
-  const formData = useSelector(state => state.filterForm);
+  const formData = useSelector(state => state.filterFormSlice);
+
   const dispatch = useDispatch();
 
   const { place, checkIn, checkOut, guests } = formData;
@@ -29,12 +30,6 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
     if (latestSelect.current === 'checkIn') headerRefs.checkInWrapperRef.current.focus();
     else if (latestSelect.current === 'checkOut') headerRefs.checkOutWrapperRef.current.focus();
     else if (latestSelect.current === 'guests') headerRefs.guestWrapperRef.current.focus();
-  };
-
-  // redux action dispatch
-  const changeFormData = (name, value) => {
-    const data = { name, value }; // {'place/checkIn/checkOut/guests', payload}
-    dispatch(setFormData(data));
   };
 
   const formClickBeforeDropdownHandler = useCallback(
@@ -70,7 +65,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
     if (guestsType === 'pet') pet++;
 
     const countValue = { adult, children, infant, pet };
-    changeFormData('guests', countValue);
+    dispatch(setGuests(countValue));
   };
 
   const decreaseGuestCount = (guestsData, guestType) => {
@@ -80,7 +75,7 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
     else if (guestType === 'infant') infant--;
     else if (guestType === 'pet') pet--;
     const countValue = { adult, children, infant, pet };
-    changeFormData('guests', countValue);
+    dispatch(setGuests(countValue));
   };
 
   useEffect(() => {
@@ -104,7 +99,6 @@ const HeaderFormContainer = ({ isscrolltop, isbuttonnclicked }) => {
       formData={formData}
       addGuestCount={addGuestCount}
       decreaseGuestCount={decreaseGuestCount}
-      changeFormData={changeFormData}
     />
   );
 };
