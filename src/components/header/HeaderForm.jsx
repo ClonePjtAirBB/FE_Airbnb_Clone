@@ -38,12 +38,11 @@ const HeaderForm = ({
   const guestCount = adult + children + infant + pet;
 
   // 쿼리 구성, API 호출
-  const filterSubmitHandler = () => {
+  const filterSubmitHandler = event => {
     let requestUrl = `country=${place}&checkin_date=${checkIn}&checkout_date=${checkOut}&groupsize=${guestCount}`;
     if (stayType.length !== 0) requestUrl += `stayType=${stayType}`;
 
     dispatch(__getFilteredList(requestUrl));
-    guestDropdownRef.current.style.display = 'none';
   };
 
   return (

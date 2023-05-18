@@ -44,4 +44,14 @@ export const filterOptions = [
     iconUrl: 'https://a0.muscache.com/pictures/687a8682-68b3-4f21-8d71-3c3aef6c1110.jpg',
     filterValue: '보트',
   },
+  // {
+  //   id: 10,
+  //   iconUrl: 'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg',
+  //   filterValue: '해변 바로 앞',
+  // },
+  {
+    id: 11,
+    iconUrl: 'https://a0.muscache.com/pictures/c0a24c04-ce1f-490c-833f-987613930eca.jpg',
+    filterValue: '국립공원',
+  },
 ];
