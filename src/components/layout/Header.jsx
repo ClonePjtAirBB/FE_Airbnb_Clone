@@ -4,6 +4,7 @@ import HeaderNav from '../header/HeaderNav';
 import HeaderFormContainer from '../header/HeaderFormContainer';
 import ScrollFormButton from '../header/ScrollFormButton';
 import HeaderUserNav from '../header/HeaderUserNav';
+import { useState } from 'react';
 
 const Header = ({
   isscrolltop,
@@ -12,6 +13,10 @@ const Header = ({
   onClickLogoHandler,
   onClickButtonHandler,
 }) => {
+  // UserNav 드롭다운, 모달
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Container
       isscrolltop={isscrolltop.toString()}
@@ -43,7 +48,14 @@ const Header = ({
         <ScrollFormButton />
       </ScrollFormButtonContainer>
 
-      <HeaderUserNav />
+      <UserNavContainer>
+        <HeaderUserNav
+          isUserDropdownOpen={isUserDropdownOpen}
+          setIsUserDropdownOpen={setIsUserDropdownOpen}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      </UserNavContainer>
     </Container>
   );
 };
@@ -112,5 +124,7 @@ const ScrollFormButtonContainer = styled.div`
   transform: translate(-50%, -50%);
   display: ${({ isbuttonnclicked }) => isbuttonnclicked === 'true' && 'none'};
 `;
+
+const UserNavContainer = styled.div``;
 
 export default Header;

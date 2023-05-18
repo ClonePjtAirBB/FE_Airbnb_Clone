@@ -3,12 +3,15 @@ import { styled } from 'styled-components';
 import Dropdown from '../../global/Dropdown';
 import { DatePicker, useDatePickGetter, useDatePickReset } from '@bcad1591/react-date-picker';
 import React from 'react';
+import { setCheckIn, setCheckOut } from '../../../modules/filterFormSlice';
+import { useDispatch } from 'react-redux';
 
-const CalendarDropdown = forwardRef(({ formselect, changeFormData, selectHandler }, ref) => {
+const CalendarDropdown = forwardRef(({ formselect, selectHandler }, ref) => {
   const [isCheckInClicked, setIsCheckInClicked] = useState(false);
   const [isCheckOutClicked, setIsCheckOutClicked] = useState(false);
   const { pickedDates } = useDatePickGetter();
   const resetFunc = useDatePickReset();
+  const dispatch = useDispatch();
 
   if (pickedDates.firstPickedDate && isCheckInClicked === false) {
     setIsCheckInClicked(true);
@@ -21,7 +24,7 @@ const CalendarDropdown = forwardRef(({ formselect, changeFormData, selectHandler
     if (pickedDates.firstPickedDate) {
       // TODO: 한국 시간과 하루 차이가 있어 조정 필요
       const checkInDate = `${pickedDates.firstPickedDate.toISOString()}`.slice(0, 10);
-      changeFormData('checkIn', checkInDate);
+      dispatch(setCheckIn(checkInDate));
       selectHandler('checkOut');
     }
   }, [isCheckInClicked]);
@@ -30,7 +33,7 @@ const CalendarDropdown = forwardRef(({ formselect, changeFormData, selectHandler
     if (pickedDates.secondPickedDate) {
       // TODO: 한국 시간과 하루 차이가 있어 조정 필요
       const checkOutDate = `${pickedDates.secondPickedDate.toISOString()}`.slice(0, 10);
-      changeFormData('checkOut', checkOutDate);
+      dispatch(setCheckOut(checkOutDate));
       selectHandler('guests');
     }
   }, [isCheckOutClicked]);
