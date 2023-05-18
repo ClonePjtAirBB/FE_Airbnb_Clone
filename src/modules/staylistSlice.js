@@ -1,27 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAllList, getFilteredList } from '../apis/stayList';
 
-const initialState = [
-  {
-    stayId: 1,
-    country: '',
-    city: '',
-    host: '',
-    costperday: 170000,
-    filter: '',
-    img: '',
-  },
-];
+const initialState = {
+  list: [],
+  filteredData: [],
+  isLoading: false,
+  isError: false,
+  error: null,
+};
 
 export const __getList = createAsyncThunk('getList', async (payload, thunkAPI) => {
   try {
-    // axios 요청
     const response = await getAllList();
-    console.log('__getList response => ', response);
+    // console.log('__getList payload => ', payload);
+    // console.log('__getList response => ', response);
     return thunkAPI.fulfillWithValue(response);
-    // .data.어쩌구 해야함
+    // return response;
   } catch (error) {
-    console.log(`__getList Thunk error: ${error}`);
+    console.log(error);
   }
 });
 
@@ -29,8 +25,10 @@ export const __getFilteredList = createAsyncThunk('getFilteredList', async (payl
   try {
     const response = await getFilteredList(payload);
     console.log('__getFilterdeList response => ', response);
+    // return thunkAPI.fulfillWithValue(response);
+    return response;
   } catch (error) {
-    console.log(`__getList Thunk error: ${error}`);
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -48,9 +46,29 @@ export const stayListSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       console.log('stayListSlice state =>', state);
-      // state.todos = action.payload;
+      state.list = action.payload;
+      // return action.payload;
+      // return state.list;
     },
     [__getList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    },
+    [__getFilteredList.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    [__getFilteredList.fulfilled]: (state, action) => {
+      console.log('stayListSlice filterd action =>', action);
+      state.isLoading = false;
+      state.isError = false;
+      console.log('stayListSlice filterd state =>', state);
+      state.filteredData = action.payload;
+      // return action.payload;
+      // return state.filteredData;
+    },
+    [__getFilteredList.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;

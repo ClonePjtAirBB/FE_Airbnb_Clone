@@ -2,10 +2,13 @@ import { css, styled } from 'styled-components';
 import { forwardRef } from 'react';
 import Dropdown from '../../global/Dropdown';
 import korMapImg from '../../assets/header-place-korea-map.svg';
+import { setPlace } from '../../../modules/filterFormSlice';
+import { useDispatch } from 'react-redux';
 
-const PlaceDropdown = forwardRef(({ formselect, formData, changeFormData, selectHandler }, ref) => {
+const PlaceDropdown = forwardRef(({ formselect, formData, selectHandler }, ref) => {
+  const dispatch = useDispatch();
   const placeSelectHandler = placeType => {
-    changeFormData('place', placeType);
+    dispatch(setPlace(placeType));
     selectHandler('checkIn');
   };
 

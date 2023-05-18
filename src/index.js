@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './reset.css';
 import { Provider } from 'react-redux';
-import rootReducer from './modules/config';
-import { createStore } from 'redux';
+import store from './modules/configStore';
 
 import { DatePickerProvider } from '@bcad1591/react-date-picker';
-
-export const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
