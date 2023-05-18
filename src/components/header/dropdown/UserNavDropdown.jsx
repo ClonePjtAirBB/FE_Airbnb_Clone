@@ -18,11 +18,25 @@ const UserNavDropdown = ({ setIsUserDropdownOpen, isModalOpen, setIsModalOpen })
     setIsUserDropdownOpen(false);
   };
 
+  const logoutClickHandler = () => {
+    alert('정상적으로 로그아웃되었습니다.');
+    sessionStorage.clear();
+    window.location.reload();
+  };
+
+  const isLogin = sessionStorage.getItem('login') === 'true';
+
   return (
     <>
       <StContainer>
-        <StDropdownLi onClick={() => dropdownClickHandler('signin')}>로그인</StDropdownLi>
-        <StDropdownLi onClick={() => dropdownClickHandler('signup')}>회원가입</StDropdownLi>
+        {isLogin ? (
+          <StDropdownLi onClick={logoutClickHandler}>로그아웃</StDropdownLi>
+        ) : (
+          <>
+            <StDropdownLi onClick={() => dropdownClickHandler('signin')}>로그인</StDropdownLi>
+            <StDropdownLi onClick={() => dropdownClickHandler('signup')}>회원가입</StDropdownLi>
+          </>
+        )}
         <StDropdownLi>도움말</StDropdownLi>
       </StContainer>
       {isModalOpen && (
@@ -57,9 +71,11 @@ const StContainer = styled.div`
     padding-top: 15px;
     padding-bottom: 20px;
   }
+  :last-child {
+    border-top: 1px solid #dddddd;
+  }
   :nth-child(2) {
     padding-bottom: 15px;
-    border-bottom: 1px solid #dddddd;
   }
 `;
 

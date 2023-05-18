@@ -13,6 +13,7 @@ const LoginModal = ({ closeModalHandler, setShowSignupModal, setShowSigninModal 
       const res = await auth({ email, password }, PATH_URL.SIGNIN);
       alert(res.msg);
       closeModalHandler();
+      sessionStorage.setItem('login', true);
     } catch (error) {}
   };
 
