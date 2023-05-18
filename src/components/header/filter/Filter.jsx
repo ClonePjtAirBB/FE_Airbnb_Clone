@@ -31,7 +31,7 @@ const Container = styled.div`
   background-color: white;
   width: 100%;
   height: 110px;
-  top: 10%;
+  top: 9.5%;
 
   display: grid;
   grid-auto-flow: column;
