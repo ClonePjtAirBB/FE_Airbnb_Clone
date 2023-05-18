@@ -1,48 +1,40 @@
 import { styled } from 'styled-components';
 import { ReactComponent as LineIcon } from '../assets/header-user-button-line.svg';
 import { ReactComponent as UserIcon } from '../assets/header-user-button-icon.svg';
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import Dropdown from '../global/Dropdown';
 import UserNavDropdown from './dropdown/UserNavDropdown';
 
-const HeaderUserNav = () => {
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+const HeaderUserNav = ({
+  isUserDropdownOpen,
+  setIsUserDropdownOpen,
+  isModalOpen,
+  setIsModalOpen,
+}) => {
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsUserDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [dropdownRef]);
-
-  const dropdownHandler = () => {
-    setIsUserDropdownOpen(!isUserDropdownOpen);
-  };
 
   return (
     <>
       <Container>
         <Button>당신의 공간을 에어비앤비하세요</Button>
 
-        <UserContainer ref={dropdownRef} onClick={dropdownHandler}>
+        <UserContainer ref={dropdownRef} onClick={() => setIsUserDropdownOpen(true)}>
           <LineIcon />
           <UserIcon />
         </UserContainer>
+
+        {isUserDropdownOpen && (
+          <>
+            <UserDropdownWrapper dropdownState="user">
+              <UserNavDropdown
+                setIsUserDropdownOpen={setIsUserDropdownOpen}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              />
+            </UserDropdownWrapper>
+          </>
+        )}
       </Container>
-      {isUserDropdownOpen && (
-        <>
-          <UserDropdownWrapper dropdownState="user">
-            <UserNavDropdown />
-          </UserDropdownWrapper>
-        </>
-      )}
     </>
   );
 };
@@ -57,6 +49,10 @@ const Button = styled.button`
   font-size: 14px;
   color: #222222;
   height: 42px;
+
+  @media screen and (max-width: 1079px) {
+    display: none;
+  }
 `;
 
 const UserContainer = styled.button`
